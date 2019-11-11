@@ -1,0 +1,1047 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="angular2,angular环境搭建,Component,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前言   终于忙完了毕业的一些杂七杂八事情，但是突然的闲下来了，又感觉慌得很(os: 犯贱的命啊)。就想着不依赖angular-cli，写一个入门的小demo(不包含测试),一来呢熟悉一下angular2项目的文件结构;二来呢可以了解一下需要的这些依赖的作用。 项目结构   项目名&amp;quot;demo-by-self&amp;quot;,初始的文件结构如下：  demo-by-self&amp;lt;br/&amp;gt">
+<meta name="keywords" content="angular2,angular环境搭建,Component">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angular2入门之开发环境搭建">
+<meta property="og:url" content="http://yoursite.com/2017/06/11/angular2-build-development-environment/index.html">
+<meta property="og:site_name" content="之喜郎">
+<meta property="og:description" content="前言   终于忙完了毕业的一些杂七杂八事情，但是突然的闲下来了，又感觉慌得很(os: 犯贱的命啊)。就想着不依赖angular-cli，写一个入门的小demo(不包含测试),一来呢熟悉一下angular2项目的文件结构;二来呢可以了解一下需要的这些依赖的作用。 项目结构   项目名&amp;quot;demo-by-self&amp;quot;,初始的文件结构如下：  demo-by-self&amp;lt;br/&amp;gt">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ordzg7xsq.bkt.clouddn.com/blog/angular2%E5%AD%A6%E4%B9%A0/angular2%E7%AC%94%E8%AE%B0%28%E4%B8%80%29-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/result.png">
+<meta property="og:updated_time" content="2018-04-08T09:57:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="angular2入门之开发环境搭建">
+<meta name="twitter:description" content="前言   终于忙完了毕业的一些杂七杂八事情，但是突然的闲下来了，又感觉慌得很(os: 犯贱的命啊)。就想着不依赖angular-cli，写一个入门的小demo(不包含测试),一来呢熟悉一下angular2项目的文件结构;二来呢可以了解一下需要的这些依赖的作用。 项目结构   项目名&amp;quot;demo-by-self&amp;quot;,初始的文件结构如下：  demo-by-self&amp;lt;br/&amp;gt">
+<meta name="twitter:image" content="http://ordzg7xsq.bkt.clouddn.com/blog/angular2%E5%AD%A6%E4%B9%A0/angular2%E7%AC%94%E8%AE%B0%28%E4%B8%80%29-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/result.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/11/angular2-build-development-environment/">
+
+
+
+
+
+  <title> angular2入门之开发环境搭建 | 之喜郎 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">之喜郎</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/11/angular2-build-development-environment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yhui">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="之喜郎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                angular2入门之开发环境搭建
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-11T21:41:51+08:00">
+                2017-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/angular2/" itemprop="url" rel="index">
+                    <span itemprop="name">angular2</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/11/angular2-build-development-environment/" class="leancloud_visitors" data-flag-title="angular2入门之开发环境搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3>前言</h3>
+<p>  终于忙完了毕业的一些杂七杂八事情，但是突然的闲下来了，又感觉慌得很(os: 犯贱的命啊)。就想着不依赖angular-cli，写一个入门的小demo(不包含测试),一来呢熟悉一下angular2项目的文件结构;二来呢可以了解一下需要的这些依赖的作用。</p>
+<h3>项目结构</h3>
+<p>  项目名&quot;demo-by-self&quot;,初始的文件结构如下：</p>
+<blockquote>
+<p>demo-by-self&lt;br/&gt;| —— app&lt;br/&gt;  | —— app.component.html&lt;br/&gt;  | —— app.component.ts&lt;br/&gt;  | —— app.module.ts&lt;br/&gt;  | —— main.ts&lt;br/&gt;  | —— app.component.css&lt;br/&gt;| —— index.html&lt;br/&gt;| —— package.json&lt;br/&gt;| —— tsconfig.json&lt;br/&gt;</p>
+</blockquote>
+<p>&lt;!-- more --&gt;
+   <strong>1. package.json基础的配置如下：</strong> &lt;br/&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;dependencies&quot;: &#123;</span><br><span class="line">        &quot;@angular/common&quot;: &quot;2.2.0&quot;,</span><br><span class="line">        &quot;@angular/compiler&quot;: &quot;2.2.0&quot;,</span><br><span class="line">        &quot;@angular/core&quot;: &quot;2.2.0&quot;,</span><br><span class="line">        &quot;@angular/forms&quot;: &quot;2.2.0&quot;,</span><br><span class="line">        &quot;@angular/platform-browser&quot;: &quot;2.2.0&quot;,</span><br><span class="line">        &quot;@angular/platform-browser-dynamic&quot;: &quot;2.2.0&quot;,</span><br><span class="line">        &quot;reflect-metadata&quot;: &quot;0.1.8&quot;,</span><br><span class="line">        &quot;rxjs&quot;: &quot;5.0.0-beta.12&quot;,</span><br><span class="line">        &quot;zone.js&quot;: &quot;0.6.26&quot;,</span><br><span class="line">        &quot;core-js&quot;: &quot;2.4.1&quot;,</span><br><span class="line">        &quot;classlist.js&quot;: &quot;1.1.20150312&quot;,</span><br><span class="line">        &quot;systemjs&quot;: &quot;0.19.40&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;devDependencies&quot;: &#123;</span><br><span class="line">        &quot;lite-server&quot;: &quot;2.2.2&quot;,</span><br><span class="line">        &quot;typescript&quot;: &quot;2.0.3&quot;,</span><br><span class="line">        &quot;typings&quot;: &quot;1.4.0&quot;,</span><br><span class="line">        &quot;concurrently&quot;: &quot;3.1.0&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;scripts&quot;: &#123;</span><br><span class="line">        &quot;start&quot;: &quot;concurrently \&quot;npm run tscwatch\&quot; \&quot;npm run lite\&quot; &quot;,</span><br><span class="line">        &quot;tsc&quot;: &quot;tsc&quot;,</span><br><span class="line">        &quot;tscwatch&quot;: &quot;tsc -w&quot;,</span><br><span class="line">        &quot;lite&quot;: &quot;lite-server&quot;,</span><br><span class="line">        &quot;typings&quot;: &quot;typings&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>ps :</strong>&lt;br/&gt;
+  dependencies: 运行程序需要用到的依赖组件&lt;br/&gt;
+  dveDependencies: 用于开发环境的依赖组件&lt;br/&gt;
+  scripts: 可在命令行运行的脚本，这里包含了TypeScript的编译器和开发时用到的HTTP server&lt;br/&gt;
+  <code>cnpm i</code>开始安装依赖&lt;br/&gt;</p>
+<p>   <strong>2. 配置typescriptb编译器，tsconfig.json配置如下</strong>&lt;br/&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;compilerOptions&quot;: &#123;</span><br><span class="line">        &quot;target&quot;: &quot;es5&quot;,</span><br><span class="line">        &quot;module&quot;: &quot;system&quot;,</span><br><span class="line">        &quot;sourceMap&quot;: true,</span><br><span class="line">        &quot;moduleResolution&quot;: &quot;node&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;exclude&quot;: [</span><br><span class="line">        &quot;node_modules&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3>将angular引入到项目中</h3>
+<p>  <strong>1. index.html增加如下的文件</strong>&lt;br/&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;node_modules/classlist.js/classList.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;node_modules/core-js/client/shim.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;node_modules/zone.js/dist/zone.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;node_modules/reflect-metadata/Reflect.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;node_modules/systemjs/dist/system.src.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body class=&quot;m-a-1&quot;&gt;</span><br><span class="line">    &lt;app&gt;&lt;/app&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<p>  <strong>2. app.component.html</strong>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;&#123;&#123;title&#125;&#125;&lt;/h1&gt;</span><br></pre></td></tr></table></figure></p>
+<p>  <strong>3. app.component.ts</strong>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import &#123;Component&#125; from &quot;@angular/core&quot;</span><br><span class="line">import &#123;Model, TodoItem&#125; from &quot;./model&quot;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">    selector: &quot;todo-app&quot;,</span><br><span class="line">    templateUrl: &quot;app.component.html&quot;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export class AppComponent &#123;</span><br><span class="line">    title: string = &quot;hello angular&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>模块</strong>&lt;br/&gt;
+  Angular程序是模块化的，它是由许多专职于不同角色的模块组成的，并且使用export暴露以供外部调用。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export class AppComponent &#123; &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>注解</strong>&lt;br/&gt;
+  入门示例中把它叫做Component Metadata但我觉得称为注解更好理解吧（迷糊）。&lt;br/&gt;
+  一个类想要成为Anglar的组件，需要我们为它加上特定的注解，Anglar需要这些注解来构造视图以及与应用的其它组件交互。
+定义一个组件使用@Component注解，为此我们需要引入Angular的核心库。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123;Component&#125; from &apos;@angular/core&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>  写注解是与其它语言如Java相类似的，都是在这个类上进行标识
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line">    selector: &apos;my-app&apos;,</span><br><span class="line">    template: &apos;&lt;h1&gt;My First Angular 2 App&lt;/h1&gt;&apos;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>@Component 中的配置项说明：</p>
+<ul>
+<li>selector - 一个 css 选择器，它告诉 Angular 在 父级 HTML 中* 寻找一个 &lt;mylist&gt; 标签，然后创建该组件，并插入此标签中。</li>
+<li>templateUrl - 组件 HTML 模板的地址。</li>
+<li>directives - 一个数组，包含 此 模板需要依赖的组件或指令。</li>
+<li>providers - 一个数组，包含组件所依赖的服务所需要的依赖注入提供者。</li>
+</ul>
+<p>   <strong>4. app.module.ts</strong>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import &#123;NgModule&#125; from &quot;@angular/core&quot;</span><br><span class="line">import &#123;BrowserModule&#125; from &quot;@angular/platform-browser&quot;</span><br><span class="line">import &#123;FormsModule&#125; from &quot;@angular/forms&quot;</span><br><span class="line">import &#123;AppComponent&#125; from &quot;./app.component&quot;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">    declarations: [</span><br><span class="line">        AppComponent</span><br><span class="line">    ],</span><br><span class="line">    imports: [</span><br><span class="line">        BrowserModule,</span><br><span class="line">        FormsModule</span><br><span class="line">    ],</span><br><span class="line">    providers: [],</span><br><span class="line">    bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export class AppModule &#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>几个&lt;span style=&quot;color: red&quot;&gt;重要的属性&lt;/span&gt;如下：&lt;br/&gt;</p>
+<ul>
+<li>declarations （声明） - 视图类属于这个模块。 Angular 有三种类型的视图类： 组件 、 指令 和 管道 。</li>
+<li>exports - 声明（ declaration ）的子集，可用于其它模块中的组件模板 。</li>
+<li>imports - 本模块组件模板中需要由其它导出类的模块。</li>
+<li>providers - 服务的创建者。本模块把它们加入全局的服务表中，让它们在应用中的任何部分都可被访问到。</li>
+<li>bootstrap - 应用的主视图，称为根组件，它是所有其它应用视图的宿主。只有根模块需要设置 bootstrap 属性中。
+   &lt;br/&gt;</li>
+</ul>
+<p>   <strong>5. 引导文件，main.ts</strong>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#123;platformBrowserDynamic&#125; from &quot;@angular/platform-browser-dynamic&quot;;</span><br><span class="line">import &#123;AppModule&#125; from &quot;./app.module&quot;;</span><br><span class="line">platformBrowserDynamic().bootstrapModule(AppModule);</span><br></pre></td></tr></table></figure></p>
+<p>   <strong>6. index.html增加system.js配置，SystemJS是一个通用的动态模块加载器，Angular2就是通过SystemJS加载所需的模块</strong>**
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">      var paths = &#123;</span><br><span class="line">        &quot;rxjs/*&quot;: &quot;node_modules/rxjs/bundles/Rx.min.js&quot;,</span><br><span class="line">        &quot;@angular/*&quot;: &quot;node_modules/@angular/*&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    var packages = &#123; &quot;app&quot;: &#123;&#125; &#125;;</span><br><span class="line">    var angularModules = [&quot;common&quot;, &quot;compiler&quot;, &quot;core&quot;, &quot;forms&quot;,</span><br><span class="line">        &quot;platform-browser&quot;, &quot;platform-browser-dynamic&quot;];</span><br><span class="line">    angularModules.forEach(function (pkg) &#123;</span><br><span class="line">        packages[&quot;@angular/&quot; + pkg] = &#123;</span><br><span class="line">            main: &quot;/bundles/&quot; + pkg + &quot;.umd.min.js&quot;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;);</span><br><span class="line">    System.config(&#123; paths: paths, packages: packages &#125;);</span><br><span class="line">    System.import(&quot;app/main&quot;).catch(function (err) &#123; console.error(err); &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong><em>ps: <a href="http://www.jianshu.com/p/db4be331b026" target="_blank" rel="noopener">system.js配置详解</a></em></strong>
+&lt;br/&gt;</p>
+<h3>启动项目</h3>
+<p>  命令行中键入以下命令即可启动应用,不报错的话会自动打开默认浏览器&lt;br/&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure></p>
+<p>看到这个界面就说明对了，对了，对了。。。(重要的事说好几遍)
+<img src="http://ordzg7xsq.bkt.clouddn.com/blog/angular2%E5%AD%A6%E4%B9%A0/angular2%E7%AC%94%E8%AE%B0%28%E4%B8%80%29-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/result.png" alt="默念三声芝麻开门就能看到la!!!"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/angular2/" rel="tag"># angular2</a>
+          
+            <a href="/tags/angular环境搭建/" rel="tag"># angular环境搭建</a>
+          
+            <a href="/tags/Component/" rel="tag"># Component</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/12/angular2-attr/" rel="prev" title="angular2笔记--属性">
+                angular2笔记--属性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg" alt="yhui">
+          <p class="site-author-name" itemprop="name">yhui</p>
+           
+              <p class="site-description motion-element" itemprop="description">哪有全力以赴，只是尽力而为</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/iyanghui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">将angular引入到项目中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">启动项目</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017-6 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yhui</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("q87Cu37Tjw4A7Aysl3yhTlkR-gzGzoHsz", "1fWuR3yFSfUFyjdtvorqSsMC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("q87Cu37Tjw4A7Aysl3yhTlkR-gzGzoHsz", "1fWuR3yFSfUFyjdtvorqSsMC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+  
+</body>
+</html>

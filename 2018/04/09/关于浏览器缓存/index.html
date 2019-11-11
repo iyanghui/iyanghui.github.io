@@ -1,0 +1,1043 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="http 缓存 浏览器缓存,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="基本认识  浏览器缓存，也叫客户端缓存，具体又可以分为强缓存和协商缓存。&amp;lt;br/&amp;gt; 浏览器的缓存规则，对于浏览器缓存来说，这个规则是在HTTP协议头和HTML页面的Meta标签中定义的。他们分别从新鲜度和校验值两个维度来规定浏览器是否可以直接使用缓存中的副本，还是需要去源服务器获取更新的版本。 浏览器的缓存机制，其实主要就是HTTP协议定义的缓存机制（如： Expires； Cache">
+<meta name="keywords" content="http 缓存 浏览器缓存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于浏览器缓存">
+<meta property="og:url" content="http://yoursite.com/2018/04/09/关于浏览器缓存/index.html">
+<meta property="og:site_name" content="之喜郎">
+<meta property="og:description" content="基本认识  浏览器缓存，也叫客户端缓存，具体又可以分为强缓存和协商缓存。&amp;lt;br/&amp;gt; 浏览器的缓存规则，对于浏览器缓存来说，这个规则是在HTTP协议头和HTML页面的Meta标签中定义的。他们分别从新鲜度和校验值两个维度来规定浏览器是否可以直接使用缓存中的副本，还是需要去源服务器获取更新的版本。 浏览器的缓存机制，其实主要就是HTTP协议定义的缓存机制（如： Expires； Cache">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ordzg7xsq.bkt.clouddn.com/blog/%E5%85%B3%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/http_cache_control_request.png">
+<meta property="og:image" content="http://ordzg7xsq.bkt.clouddn.com/blog/%E5%85%B3%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/http_cache_control_response.png">
+<meta property="og:image" content="http://ordzg7xsq.bkt.clouddn.com/blog/%E5%85%B3%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/http_refresh.png">
+<meta property="og:image" content="http://ordzg7xsq.bkt.clouddn.com/blog/%E5%85%B3%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/http_all.png">
+<meta property="og:updated_time" content="2018-04-10T10:35:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于浏览器缓存">
+<meta name="twitter:description" content="基本认识  浏览器缓存，也叫客户端缓存，具体又可以分为强缓存和协商缓存。&amp;lt;br/&amp;gt; 浏览器的缓存规则，对于浏览器缓存来说，这个规则是在HTTP协议头和HTML页面的Meta标签中定义的。他们分别从新鲜度和校验值两个维度来规定浏览器是否可以直接使用缓存中的副本，还是需要去源服务器获取更新的版本。 浏览器的缓存机制，其实主要就是HTTP协议定义的缓存机制（如： Expires； Cache">
+<meta name="twitter:image" content="http://ordzg7xsq.bkt.clouddn.com/blog/%E5%85%B3%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/http_cache_control_request.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/09/关于浏览器缓存/">
+
+
+
+
+
+  <title> 关于浏览器缓存 | 之喜郎 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">之喜郎</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/关于浏览器缓存/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yhui">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="之喜郎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于浏览器缓存
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T19:38:00+08:00">
+                2018-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/04/09/关于浏览器缓存/" class="leancloud_visitors" data-flag-title="关于浏览器缓存">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3>基本认识</h3>
+<ul>
+<li>浏览器缓存，也叫客户端缓存，具体又可以分为强缓存和协商缓存。&lt;br/&gt;</li>
+<li>浏览器的缓存规则，对于浏览器缓存来说，这个规则是在HTTP协议头和HTML页面的Meta标签中定义的。他们分别从新鲜度和校验值两个维度来规定浏览器是否可以直接使用缓存中的副本，还是需要去源服务器获取更新的版本。</li>
+<li>浏览器的缓存机制，其实主要就是HTTP协议定义的缓存机制（如： Expires； Cache-control等）。但是也有非HTTP协议定义的缓存机制，如使用HTML Meta 标签，Web开发者可以在HTML页面的 &lt;head&gt; 节点中加入 &lt;meta&gt; 标签，代码如下：
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta http-equiv=&quot;pragma&quot; content=&quot;no-cache&quot;&gt; // 仅有IE才能识别这段meta标签含义，其它主流浏览器仅能识别 “Cache-Control: no-cache” 的 meta 标签</span><br><span class="line">&lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3>强缓存</h3>
+<p>  强缓存是利用Expires或者Cache-Control这两个 http response header 来实现的(启用其中一个即可，当两个同时存在的时候，Cache-Control的优先级高)，都用来表示资源在客户端的缓存有效期。强缓存并不会发请求到服务器，当浏览器对某个静态资源命中强缓存时，返回的 http 状态码为200.</p>
+<h4>1. Expires</h4>
+<p>  Expires是 http1.0 提出的一个表是资源过期的 header ，它描述的是一个绝对时间，用GMT格式的字符串表示<code>Expires: Thu, 31 Dec 2037 23:55:55 GMT</code>。</p>
+<ul>
+<li>
+<p>浏览器在第一次请求静态资源的时候，服务器返回并设置响应头。浏览器在接受到后，将这个 header 一并缓存下来(也就是说，当强缓存命中的时候，response 返回的 header 其实是来自于之前浏览器缓存的 header )。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Date date = new java.util.Date();    </span><br><span class="line">response.setDateHeader(&quot;Expires&quot;,date.getTime() + 20000); //Expires:过时期限值 </span><br><span class="line">response.setHeader(&quot;Cache-Control&quot;, &quot;public&quot;); //Cache-Control来控制页面的缓存与否,public:浏览器和缓存服务器都可以缓存页面信息；</span><br><span class="line">response.setHeader(&quot;Pragma&quot;, &quot;Pragma&quot;); //Pragma:设置页面是否缓存，为Pragma则缓存，no-cache则不缓存</span><br></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p>再次请求这个资源的时候，先从缓存中找，比较当前时间与 Expires ,如果未过期，直接取缓存</p>
+</li>
+</ul>
+<h4>2. Cache-Control</h4>
+<p>  Cache-Control是 http1.1 提出的新的 header ，这是一个相对时间，以秒为单位<code>Cache-Control: max-age=31560000</code></p>
+<ul>
+<li>浏览器在第一次请求静态资源的时候，服务器返回并设置响应头。浏览器在接受到后，将这个 header 一并缓存下来(也就是说，当强缓存命中的时候，response 返回的 header 其实是来自于之前浏览器缓存的 header )。</li>
+<li>再次请求这个资源的时候，先从缓存中找，根据它第一次的请求时间和Cache-Control设定的有效期，计算出一个资源过期时间，再拿这个过期时间跟当前的请求时间比较，如果请求时间在过期时间之前，就能命中缓存。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.setHeader(&quot;Cache-Control&quot;, &quot;public&quot;); // Cache-Control来控制页面的缓存与否,public:浏览器和缓存服务器都可以缓存页面信息；</span><br><span class="line">response.setHeader(&quot;Pragma&quot;, &quot;Pragma&quot;); //Pragma:设置页面是否缓存，为Pragma则缓存，no-cache则不缓存</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3>协商缓存</h3>
+<p>  协商缓存是利用[Last-Modified, if-Modified-Since]和[Etag, if-None-Match]这两对 header 来管理的。如果 Last-Modified 和 ETag 同时被使用，则要求它们的验证都必须通过才会返回状态码304，若其中某个验证没通过，则服务器会按常规返回资源实体及状态码200。</p>
+<h4>1. Last-Modified 与 If-Modified-Since</h4>
+<p>  这一对首部通过资源修改日期判断是否有变化。服务器将资源传递给客户端时，会将资源最后更改的时间以 “Last-Modified: GMT” 的形式加在实体首部上一起返回给客户端。客户端会为资源标记上该信息，下次再次请求时，会把该信息附带在请求报文中一并带给服务器去做检查，若传递的时间值与服务器上该资源最终修改时间是一致的，则说明该资源没有被修改过，直接返回304状态码即可</p>
+<ul>
+<li>首次获取资源：服务器响应中添加首部Last-Modified，说明资源最近一次修改时间。浏览器保存下来这个时间</li>
+<li>验证资源：浏览器带上If-Modified-Since首部，值就是Last-Modified返回的时间；服务器比较If-Modified-Since的时间与资源最近一次修改时间;</li>
+<li>如果最近一次修改时间小于If-Modified-Since的时间，则返回304响应，响应中也会有cache-control、expires、Date首部；</li>
+<li>如果最近一次修改时间大于If-Modified-Since的时间，则返回新资源，并且更新所对应的全部首部，包括cache-control、expires、Date</li>
+</ul>
+<h4>2. ETag</h4>
+<p>  ETag是服务器为资源生成的唯一标识字符串(这个唯一标识是一个字符串，只要资源有变化这个串就不同，跟最后修改时间没有关系)。使用过程与Last-Modified类似。</p>
+<ul>
+<li>浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在respone的header加上ETag的header</li>
+<li>浏览器再次跟服务器请求这个资源时，在request的header上加上If-None-Match的header，这个header的值就是上一次请求时返回的ETag的值</li>
+<li>服务器根据资源生成一个新的ETag，和传过来的If-None-Match进行比较，如果这两个值相同就说明资源没有变化，返回304 Not Modified，但是不会返回资源内容；如果有变化，就正常返回资源内容。与Last-Modified不一样的是，当服务器返回304 Not Modified的响应时，由于ETag重新生成过，response header中还会把这个ETag返回，即使这个ETag跟之前的没有变化：</li>
+</ul>
+<h3>附录</h3>
+<p>  下面的图可以帮助我们更清晰的了解浏览器缓存。图片均引用自于&lt;strong&gt;腾讯前端团队&lt;/strong&gt;和&lt;strong&gt;csdn&lt;/strong&gt;。</p>
+<ul>
+<li>当 Cache-Control 作为请求头时
+<img src="http://ordzg7xsq.bkt.clouddn.com/blog/%E5%85%B3%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/http_cache_control_request.png" alt="默念三声芝麻开门就能看到la!!!"></li>
+<li>当 Cache-Control 作为响应头时
+<img src="http://ordzg7xsq.bkt.clouddn.com/blog/%E5%85%B3%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/http_cache_control_response.png" alt="默念三声芝麻开门就能看到la!!!"></li>
+<li>用户操作与缓存
+<img src="http://ordzg7xsq.bkt.clouddn.com/blog/%E5%85%B3%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/http_refresh.png" alt="默念三声芝麻开门就能看到la!!!"></li>
+<li>浏览器缓存策略总结
+<img src="http://ordzg7xsq.bkt.clouddn.com/blog/%E5%85%B3%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/http_all.png" alt="默念三声芝麻开门就能看到la!!!"></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http-缓存-浏览器缓存/" rel="tag"># http 缓存 浏览器缓存</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/09/session小结/" rel="next" title="session小结">
+                <i class="fa fa-chevron-left"></i> session小结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/21/IoC/" rel="prev" title="IoC">
+                IoC <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg" alt="yhui">
+          <p class="site-author-name" itemprop="name">yhui</p>
+           
+              <p class="site-description motion-element" itemprop="description">哪有全力以赴，只是尽力而为</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/iyanghui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">基本认识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">强缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.1.</span> <span class="nav-text">1. Expires</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.2.</span> <span class="nav-text">2. Cache-Control</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">协商缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.1.</span> <span class="nav-text">1. Last-Modified 与 If-Modified-Since</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.2.</span> <span class="nav-text">2. ETag</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017-6 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yhui</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("q87Cu37Tjw4A7Aysl3yhTlkR-gzGzoHsz", "1fWuR3yFSfUFyjdtvorqSsMC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("q87Cu37Tjw4A7Aysl3yhTlkR-gzGzoHsz", "1fWuR3yFSfUFyjdtvorqSsMC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+  
+</body>
+</html>

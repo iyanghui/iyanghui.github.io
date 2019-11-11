@@ -1,0 +1,1022 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="jquery.flot,jquery,chart,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前言   由于项目需要，确切的说是项目中用到了这个插件，但是需要用到这插件的地方前辈们也已经完成了。这几天闲着没事，想着自己之前没有接触过，网上文档也不是很多，所以写下这篇博客来记录jquery-plot对于几种图表的实现。 简介    Flot是一个Jquery下图表插件，具有简单使用，交互效果，具有吸引力外观特点。目前支持 Internet Explorer 6+, Chrome, Firef">
+<meta name="keywords" content="jquery.flot,jquery,chart">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用jquery插件flot制作不同类型的图表">
+<meta property="og:url" content="http://yoursite.com/2017/06/14/jquery-plugin-flot/index.html">
+<meta property="og:site_name" content="之喜郎">
+<meta property="og:description" content="前言   由于项目需要，确切的说是项目中用到了这个插件，但是需要用到这插件的地方前辈们也已经完成了。这几天闲着没事，想着自己之前没有接触过，网上文档也不是很多，所以写下这篇博客来记录jquery-plot对于几种图表的实现。 简介    Flot是一个Jquery下图表插件，具有简单使用，交互效果，具有吸引力外观特点。目前支持 Internet Explorer 6+, Chrome, Firef">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ordzg7xsq.bkt.clouddn.com/jquery%E6%8F%92%E4%BB%B6--flot/%E6%8A%98%E7%BA%BF%E5%9B%BE.png">
+<meta property="og:image" content="http://ordzg7xsq.bkt.clouddn.com/blog/jquery%E6%8F%92%E4%BB%B6--flot/%E6%9F%B1%E5%BD%A2%E5%9B%BE.png">
+<meta property="og:image" content="http://ordzg7xsq.bkt.clouddn.com/blog/jquery%E6%8F%92%E4%BB%B6--flotpie-chart.png">
+<meta property="og:updated_time" content="2017-06-14T12:26:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用jquery插件flot制作不同类型的图表">
+<meta name="twitter:description" content="前言   由于项目需要，确切的说是项目中用到了这个插件，但是需要用到这插件的地方前辈们也已经完成了。这几天闲着没事，想着自己之前没有接触过，网上文档也不是很多，所以写下这篇博客来记录jquery-plot对于几种图表的实现。 简介    Flot是一个Jquery下图表插件，具有简单使用，交互效果，具有吸引力外观特点。目前支持 Internet Explorer 6+, Chrome, Firef">
+<meta name="twitter:image" content="http://ordzg7xsq.bkt.clouddn.com/jquery%E6%8F%92%E4%BB%B6--flot/%E6%8A%98%E7%BA%BF%E5%9B%BE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/14/jquery-plugin-flot/">
+
+
+
+
+
+  <title> 使用jquery插件flot制作不同类型的图表 | 之喜郎 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">之喜郎</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/14/jquery-plugin-flot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yhui">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="之喜郎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用jquery插件flot制作不同类型的图表
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-14T16:28:01+08:00">
+                2017-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jqueryPlugins/" itemprop="url" rel="index">
+                    <span itemprop="name">jqueryPlugins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/14/jquery-plugin-flot/" class="leancloud_visitors" data-flag-title="使用jquery插件flot制作不同类型的图表">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3>前言</h3>
+<p>  由于项目需要，确切的说是项目中用到了这个插件，但是需要用到这插件的地方前辈们也已经完成了。这几天闲着没事，想着自己之前没有接触过，网上文档也不是很多，所以写下这篇博客来记录jquery-plot对于几种图表的实现。</p>
+<h3>简介</h3>
+<p>   Flot是一个Jquery下图表插件，具有简单使用，交互效果，具有吸引力外观特点。目前支持 Internet Explorer 6+, Chrome, Firefox 2+, Safari 3+ and Opera 9.5+ 等浏览器，是一个基于Javascript和Jquery纯客端户的脚本库，先插入js:
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot; src=&quot;../jquery.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot; src=&quot;../jquery.flot.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>  如果要支持IE9以下的浏览器,您需要使用Excanvas, 一个canvas 模拟器，所以还需要加入这段标签:
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--[if lte IE 8]&gt;&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot; src=&quot;excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span><br></pre></td></tr></table></figure></p>
+<p>  在此次的例子中，页面中的plot定位点统一如下：
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;placeholder&quot; style=&quot;width:600px;height:300px&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>&lt;!-- more --&gt;</p>
+<h3>折线图简单实现</h3>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">   $(function() &#123;</span><br><span class="line">       var pl = $.plot($(&quot;#placeholder&quot;), [   </span><br><span class="line">           &#123;</span><br><span class="line">               label: &quot;哈登&quot;,</span><br><span class="line">               data: [</span><br><span class="line">                   [1, 49, &quot;火箭vs湖人&quot;, &quot;05月01日&quot;],</span><br><span class="line">                   [2, 22, &quot;火箭vs雷霆&quot;, &quot;05月02日&quot;],</span><br><span class="line">                   [3, 36, &quot;火箭vs公牛&quot;, &quot;05月03日&quot;]</span><br><span class="line">               ]</span><br><span class="line">           &#125;, &#123;</span><br><span class="line">               label: &quot;威斯布鲁克&quot;,</span><br><span class="line">               data: [</span><br><span class="line">                   [1, 0, &quot;湖人vs雷霆&quot;, &quot;05月21日&quot;],</span><br><span class="line">                   [2, 0, &quot;勇士vs雷霆&quot;, &quot;05月22日&quot;],</span><br><span class="line">                   [3, 0, &quot;骑士vs雷霆&quot;, &quot;05月23日&quot;]</span><br><span class="line">               ]</span><br><span class="line">           &#125;</span><br><span class="line">       ], &#123;</span><br><span class="line">           series: &#123; //控制线的填充、点的显示  </span><br><span class="line">               lines: &#123;</span><br><span class="line">                   show: true</span><br><span class="line">               &#125;,</span><br><span class="line">               points: &#123;</span><br><span class="line">                   show: true</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;,</span><br><span class="line">           //开启鼠标移动和点击事件  折线图外框颜色 和 外框的宽度  </span><br><span class="line">           grid: &#123;</span><br><span class="line">               hoverable: true,</span><br><span class="line">               clickable: true,</span><br><span class="line">               borderColor: &apos;#000&apos;,</span><br><span class="line">               borderWidth: 1</span><br><span class="line">           &#125;,</span><br><span class="line">           xaxis: &#123; //x轴的最大最小范围 和 刻度自定义。  </span><br><span class="line">               min: 0,</span><br><span class="line">               max: 5,</span><br><span class="line">               ticks: [1, 2, 3, 4, 5]</span><br><span class="line">               //ticks: [[1, &apos;1月&apos;], [2, &apos;2月&apos;]...] // 为刻度取别名，展示在x轴上的即为&apos;1月&apos;...</span><br><span class="line">           &#125;,</span><br><span class="line">           yaxis: &#123; //y轴的最小范围  </span><br><span class="line">               min: 0,</span><br><span class="line">               // max: 50  // 一般项目中的y轴最大值不固定</span><br><span class="line"></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       function showTooltip(x, y, contents) &#123; //浮动块信息  </span><br><span class="line">           $(&apos;&lt;div id=&quot;tooltip&quot;&gt;&apos; + contents + &apos;&lt;/div&gt;&apos;).css(&#123;</span><br><span class="line">               position: &apos;absolute&apos;,</span><br><span class="line">               display: &apos;none&apos;,</span><br><span class="line">               top: y + 5,</span><br><span class="line">               left: x + 5,</span><br><span class="line">               border: &apos;1px solid #fdd&apos;,</span><br><span class="line">               padding: &apos;2px&apos;,</span><br><span class="line">               &apos;background-color&apos;: &apos;#fee&apos;,</span><br><span class="line">               opacity: 0.80</span><br><span class="line">           &#125;).appendTo(&quot;body&quot;).fadeIn(200);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       var previousPoint = null;</span><br><span class="line">       $(&quot;#placeholder&quot;).bind(&quot;plothover&quot;, function(event, pos, item) &#123;</span><br><span class="line">           if (item) &#123;</span><br><span class="line">               console.log(item);  //</span><br><span class="line">               if (previousPoint != item.dataIndex) &#123;</span><br><span class="line">                   previousPoint = item.dataIndex;</span><br><span class="line">                   $(&quot;#tooltip&quot;).remove();</span><br><span class="line">                   var x = item.datapoint[0], //x y 轴位置  </span><br><span class="line">                       y = item.datapoint[1],</span><br><span class="line">                       n = x - 1;  </span><br><span class="line">                   var changci = item.series[&apos;data&apos;][n][2], //场次信息 获取当前焦点的 数据信息 通过n（即x轴位置获取数据）  </span><br><span class="line">                       shijian = item.series[&apos;data&apos;][n][3]; //同上 场次信息获取原理。 比赛时间  </span><br><span class="line">                   var contents = &quot;比赛场次：&quot; + changci + &quot;&lt;br /&gt;得分：&quot; + y + &quot;&lt;br /&gt;比赛时间：&quot; + shijian;</span><br><span class="line"></span><br><span class="line">                   showTooltip(item.pageX, item.pageY, contents);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125; else &#123;</span><br><span class="line">               $(&quot;#tooltip&quot;).remove();</span><br><span class="line">               previousPoint = null;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br><span class="line">   &lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>效果图</strong>
+<img src="http://ordzg7xsq.bkt.clouddn.com/jquery%E6%8F%92%E4%BB%B6--flot/%E6%8A%98%E7%BA%BF%E5%9B%BE.png" alt="默念三声芝麻开门就能看到la!!!">
+<strong><em>ps: <a href="http://blog.csdn.net/phpwish/article/details/8124247#comments" target="_blank" rel="noopener">详细的参数配置</a></em></strong>&lt;br/&gt;</p>
+<h3>柱状图简单实现</h3>
+<ul>
+<li>柱形图常被用来比较各组数据的相互关系, 直条的高度越高, 所代表的值越大. 除了柱形图之外, 还有条形图, 柱形图和条形图的做法一样,差别只在一个属性值&quot;horizontal&quot;, 如果设为true, 就会以条形图呈现, 另外x轴与y轴的数据需要互相对调位置。</li>
+<li>柱形图的做法和制作折线图做法大同小异,主要是数据形式不同。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">var data = [[0, 11],[1, 15],[2, 25],[3, 24],[4, 13],[5, 18]];</span><br><span class="line">var dataset = [&#123; label: &quot;2012 Average Temperature&quot;, data: data, color: &quot;#5482FF&quot; &#125;];</span><br><span class="line">var ticks = [[0, &quot;London&quot;], [1, &quot;New York&quot;], [2, &quot;New Delhi&quot;], [3, &quot;Taipei&quot;],[4, &quot;Beijing&quot;], [5, &quot;Sydney&quot;]];</span><br><span class="line">var options = &#123;</span><br><span class="line">    series: &#123;</span><br><span class="line">        bars: &#123;</span><br><span class="line">            show: true  //必须设置，不然出现的是折线图</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    bars: &#123;</span><br><span class="line">        align: &quot;center&quot;,</span><br><span class="line">        barWidth: 0.5</span><br><span class="line">    &#125;,</span><br><span class="line">    xaxis: &#123;</span><br><span class="line">        axisLabel: &quot;World Cities&quot;,</span><br><span class="line">        axisLabelUseCanvas: true,</span><br><span class="line">        axisLabelFontSizePixels: 12,</span><br><span class="line">        axisLabelFontFamily: &apos;Verdana, Arial&apos;,</span><br><span class="line">        axisLabelPadding: 10,</span><br><span class="line">        ticks: ticks</span><br><span class="line">    &#125;,</span><br><span class="line">    yaxis: &#123;</span><br><span class="line">        axisLabel: &quot;Average Temperature&quot;,</span><br><span class="line">        axisLabelUseCanvas: true,</span><br><span class="line">        axisLabelFontSizePixels: 12,</span><br><span class="line">        axisLabelFontFamily: &apos;Verdana, Arial&apos;,</span><br><span class="line">        axisLabelPadding: 3,</span><br><span class="line">        //Flot提供了一个函式tickFormatter, 这函式传入了2个参数, tick value和axis object, 并且会传回字符串,用于格式化需要显示的数据</span><br><span class="line">        tickFormatter: function (v, axis) &#123;</span><br><span class="line">            return v + &quot;°C&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    legend: &#123;</span><br><span class="line">        noColumns: 0,</span><br><span class="line">        labelBoxBorderColor: &quot;#000000&quot;,</span><br><span class="line">        position: &quot;nw&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    grid: &#123;</span><br><span class="line">        hoverable: true,</span><br><span class="line">        borderWidth: 2,</span><br><span class="line">        backgroundColor: &#123; colors: [&quot;#ffffff&quot;, &quot;#EDF5FF&quot;] &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>效果图</strong>
+<img src="http://ordzg7xsq.bkt.clouddn.com/blog/jquery%E6%8F%92%E4%BB%B6--flot/%E6%9F%B1%E5%BD%A2%E5%9B%BE.png" alt="默念三声芝麻开门就能看到la!!!">&lt;br/&gt;</p>
+<h3>饼状图简单实现</h3>
+<p>  饼状图的需要借助jquery.flot.pie.js文件，
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&apos;../bower_components/jquery.flot.pie.js&apos;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>  数据的书写形式变化很大
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">   $(function() &#123;</span><br><span class="line">       var data = [&#123;</span><br><span class="line">           label: &quot;鱼香肉丝&quot;,</span><br><span class="line">           data: 40</span><br><span class="line">       &#125;, &#123;</span><br><span class="line">           label: &quot;水煮肉片&quot;,</span><br><span class="line">           data: 50</span><br><span class="line">       &#125;, &#123;</span><br><span class="line">           label: &quot;辣子鸡丁&quot;,</span><br><span class="line">           data: 45</span><br><span class="line">       &#125;, &#123;</span><br><span class="line">           label: &quot;糖醋里脊&quot;,</span><br><span class="line">           data: 40</span><br><span class="line">       &#125;, &#123;</span><br><span class="line">           label: &quot;土豆牛肉盖&quot;,</span><br><span class="line">           data: 30</span><br><span class="line">       &#125;];</span><br><span class="line"></span><br><span class="line">       $.plot($(&quot;#placeholder&quot;), data, &#123;</span><br><span class="line">           series: &#123;</span><br><span class="line">               pie: &#123;</span><br><span class="line">                   show: true, //显示饼图  </span><br><span class="line">                   radius: 1, //半径    </span><br><span class="line">                   label: &#123;</span><br><span class="line">                       show: true,</span><br><span class="line">                       radius: 2 / 3,</span><br><span class="line">                       formatter: function(label, series) &#123;</span><br><span class="line">                           return &apos;&lt;div style=&quot;font-size:8pt;text-align:center;padding:2px;color:white;&quot;&gt;&apos; + label + &apos;&lt;br/&gt;&apos; + Math.round(series.percent) + &apos;%&lt;/div&gt;&apos;;</span><br><span class="line">                       &#125;,</span><br><span class="line">                       threshold: 0.03 //这个值小于0.03，也就是3%时，label就会隐藏</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;,</span><br><span class="line">           legend: &#123;</span><br><span class="line">               show: false //不显示图例  </span><br><span class="line">           &#125;,</span><br><span class="line">           grid: &#123;</span><br><span class="line">               hoverable: true,</span><br><span class="line">               clickable: true</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       //在这里可以自定义方法</span><br><span class="line">       $(&quot;#placeholder&quot;).bind(&quot;plothover&quot;, function(event, pos, obj) &#123;&#125;);</span><br><span class="line">       $(&quot;#placeholder&quot;).bind(&quot;plotclick&quot;, function(event, pos, obj) &#123;&#125;);</span><br><span class="line">   &#125;)</span><br><span class="line">   &lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>效果图</strong>
+<img src="http://ordzg7xsq.bkt.clouddn.com/blog/jquery%E6%8F%92%E4%BB%B6--flotpie-chart.png" alt="默念三声芝麻开门就能看到la!!!">&lt;br/&gt;</p>
+<h3>总结</h3>
+<p>  水煮肉片，辣子鸡丁，糖醋里脊。。。。好饿。。。&lt;br/&gt;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jquery-flot/" rel="tag"># jquery.flot</a>
+          
+            <a href="/tags/jquery/" rel="tag"># jquery</a>
+          
+            <a href="/tags/chart/" rel="tag"># chart</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/13/angular2-animation/" rel="next" title="angular2入门之动画指南">
+                <i class="fa fa-chevron-left"></i> angular2入门之动画指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/25/hexo中使用emoji/" rel="prev" title="hexo中使用emoji">
+                hexo中使用emoji <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg" alt="yhui">
+          <p class="site-author-name" itemprop="name">yhui</p>
+           
+              <p class="site-description motion-element" itemprop="description">哪有全力以赴，只是尽力而为</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/iyanghui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">折线图简单实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">柱状图简单实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">饼状图简单实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017-6 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yhui</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("q87Cu37Tjw4A7Aysl3yhTlkR-gzGzoHsz", "1fWuR3yFSfUFyjdtvorqSsMC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("q87Cu37Tjw4A7Aysl3yhTlkR-gzGzoHsz", "1fWuR3yFSfUFyjdtvorqSsMC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+  
+</body>
+</html>
