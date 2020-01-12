@@ -113,13 +113,10 @@
 <meta property="og:site_name" content="之喜郎">
 <meta property="og:description" content="赃读：当前事务能看到别的事务未提交的数据，称为“赃读”。   不可重复读：表示“不一定可重读”。其实，&amp;quot;不可重读&amp;quot;与&amp;quot;幻读&amp;quot;的表象都非常相似，都是在同一个事务中，并没有操作某些数据，可是这些数据却莫名的被改变了，或者突然多出了某些数据，又或者突然少了某些数据，这些状况好像都能用&amp;quot;幻象&amp;quot;这个词去理解。而且，mysql官方文档中也把不可重读">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://1drv.ms/u/s!Ar1MYQzTMlu4iibP5dTnUO-RXXBW?e=5PFKO2">
-<meta property="og:image" content="https://1drv.ms/u/s!Ar1MYQzTMlu4iihnZ9TndD-IxvCk?e=HVrZwK">
-<meta property="og:updated_time" content="2020-01-12T15:03:10.103Z">
+<meta property="og:updated_time" content="2020-01-12T15:11:14.569Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL事务隔离级别">
 <meta name="twitter:description" content="赃读：当前事务能看到别的事务未提交的数据，称为“赃读”。   不可重复读：表示“不一定可重读”。其实，&amp;quot;不可重读&amp;quot;与&amp;quot;幻读&amp;quot;的表象都非常相似，都是在同一个事务中，并没有操作某些数据，可是这些数据却莫名的被改变了，或者突然多出了某些数据，又或者突然少了某些数据，这些状况好像都能用&amp;quot;幻象&amp;quot;这个词去理解。而且，mysql官方文档中也把不可重读">
-<meta name="twitter:image" content="https://1drv.ms/u/s!Ar1MYQzTMlu4iibP5dTnUO-RXXBW?e=5PFKO2">
 
 
 
@@ -403,13 +400,13 @@
 <h4>1. Read-uncommitted（读未提交）</h4>
 <p>在该隔离级别中，所有事务都可以读到其他事务未提交的执行结果。由于读到未提交数据，称之为“赃读”。</p>
 <p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set session transaction isolation level read uncommitted;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select @@tx_isolation;</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">| @@tx_isolation   |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">| READ-UNCOMMITTED |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://1drv.ms/u/s!Ar1MYQzTMlu4iibP5dTnUO-RXXBW?e=5PFKO2" alt="read-uncommitted"></p>
+<p>&lt;img src=&quot;/sql_transaction_isolation_level/read_uncommitted.png&quot; alt=&quot;read_uncommitted&quot; style=&quot;zoom:80%;&quot; /&gt;</p>
 <p>Q：实际上，我们的数据改变了吗？</p>
 <p>A：答案是否定的，事务只有在commit之后，才会真正的更新到数据库。</p>
 <h4>2. Read-committed（读已提交）</h4>
 <p>这是大多数数据库默认的隔离级别（<strong>但不是MySQL默认级别</strong>），在该隔离级别中，当前会话只能读取到其他事务已提交的数据，解决了“脏读问题”。但是同一事务的不同实例在处理期间，可能会有新的commit，所以同一select可能返回不同的结果，也就是“不可重读”问题。</p>
 <p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set session transaction isolation level read committed;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select @@tx_isolation;</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">| @@tx_isolation   |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">| READ-COMMITTED |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://1drv.ms/u/s!Ar1MYQzTMlu4iihnZ9TndD-IxvCk?e=HVrZwK" alt="read-committed"></p>
+<p>&lt;img src=&quot;/sql_transaction_isolation_level/read_committed.png&quot; alt=&quot;read_committed&quot; style=&quot;zoom:80%;&quot; /&gt;</p>
 <h4>3. Repeatable-read（可重读）</h4>
 <p>这是MySQL的默认隔离级别，它确认在同一事务的多个实例在并发读取数据时，多次读取也会看到同样的数据行，而不管其他事务是不是已经提交。但是这可能会发生一个更为棘手的问题“幻读”，InnoDB和Falcon存储引擎通过多版本并发控制（MVCC，Multiversion Concurrency Control）机制解决了该问题。</p>
 <ul>
@@ -506,6 +503,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/01/12/Docker容器间通信/" rel="prev" title="Docker容器间通信">
+                Docker容器间通信 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -574,7 +575,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -585,7 +586,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -596,7 +597,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
