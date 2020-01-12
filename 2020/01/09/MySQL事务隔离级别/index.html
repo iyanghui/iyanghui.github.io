@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="yhui, iyanghui">
+  <meta name="keywords" content="MySQL,">
 
 
 
@@ -105,13 +105,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="之喜郎">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta name="description" content="赃读：当前事务能看到别的事务未提交的数据，称为“赃读”。   不可重复读：表示“不一定可重读”。其实，&amp;quot;不可重读&amp;quot;与&amp;quot;幻读&amp;quot;的表象都非常相似，都是在同一个事务中，并没有操作某些数据，可是这些数据却莫名的被改变了，或者突然多出了某些数据，又或者突然少了某些数据，这些状况好像都能用&amp;quot;幻象&amp;quot;这个词去理解。而且，mysql官方文档中也把不可重读">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL事务隔离级别">
+<meta property="og:url" content="http://yoursite.com/2020/01/09/MySQL事务隔离级别/index.html">
 <meta property="og:site_name" content="之喜郎">
+<meta property="og:description" content="赃读：当前事务能看到别的事务未提交的数据，称为“赃读”。   不可重复读：表示“不一定可重读”。其实，&amp;quot;不可重读&amp;quot;与&amp;quot;幻读&amp;quot;的表象都非常相似，都是在同一个事务中，并没有操作某些数据，可是这些数据却莫名的被改变了，或者突然多出了某些数据，又或者突然少了某些数据，这些状况好像都能用&amp;quot;幻象&amp;quot;这个词去理解。而且，mysql官方文档中也把不可重读">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://1drv.ms/u/s!Ar1MYQzTMlu4iibP5dTnUO-RXXBW?e=5PFKO2">
+<meta property="og:image" content="https://1drv.ms/u/s!Ar1MYQzTMlu4iihnZ9TndD-IxvCk?e=HVrZwK">
+<meta property="og:updated_time" content="2020-01-12T15:03:10.103Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="之喜郎">
+<meta name="twitter:title" content="MySQL事务隔离级别">
+<meta name="twitter:description" content="赃读：当前事务能看到别的事务未提交的数据，称为“赃读”。   不可重复读：表示“不一定可重读”。其实，&amp;quot;不可重读&amp;quot;与&amp;quot;幻读&amp;quot;的表象都非常相似，都是在同一个事务中，并没有操作某些数据，可是这些数据却莫名的被改变了，或者突然多出了某些数据，又或者突然少了某些数据，这些状况好像都能用&amp;quot;幻象&amp;quot;这个词去理解。而且，mysql官方文档中也把不可重读">
+<meta name="twitter:image" content="https://1drv.ms/u/s!Ar1MYQzTMlu4iibP5dTnUO-RXXBW?e=5PFKO2">
 
 
 
@@ -139,13 +147,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/2/">
+  <link rel="canonical" href="http://yoursite.com/2020/01/09/MySQL事务隔离级别/">
 
 
 
 
 
-  <title> 之喜郎 </title>
+  <title> MySQL事务隔离级别 | 之喜郎 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,9 +178,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -285,9 +291,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -296,7 +302,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/14/jquery-plugin-flot/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/09/MySQL事务隔离级别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yhui">
@@ -317,10 +323,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/06/14/jquery-plugin-flot/" itemprop="url">
-                  使用jquery插件flot制作不同类型的图表
-                </a>
+                MySQL事务隔离级别
               
             
           </h1>
@@ -335,8 +338,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-14T16:28:01+08:00">
-                2017-06-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-09T18:49:45+08:00">
+                2020-01-09
               </time>
             
 
@@ -346,28 +349,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/jqueryPlugins/" itemprop="url" rel="index">
-                    <span itemprop="name">jqueryPlugins</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -375,7 +356,7 @@
 
           
           
-             <span id="/2017/06/14/jquery-plugin-flot/" class="leancloud_visitors" data-flag-title="使用jquery插件flot制作不同类型的图表">
+             <span id="/2020/01/09/MySQL事务隔离级别/" class="leancloud_visitors" data-flag-title="MySQL事务隔离级别">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,553 +386,141 @@
       
 
       
+        <blockquote>
+<p>赃读：当前事务能看到别的事务未提交的数据，称为“赃读”。</p>
+</blockquote>
+<blockquote>
+<p>不可重复读：表示“不一定可重读”。其实，&quot;不可重读&quot;与&quot;幻读&quot;的表象都非常相似，都是在同一个事务中，并没有操作某些数据，可是这些数据却莫名的被改变了，或者突然多出了某些数据，又或者突然少了某些数据，这些状况好像都能用&quot;幻象&quot;这个词去理解。而且，mysql官方文档中也把不可重读归为幻读，只是大家为了更加的细化它们的区别，把他们分成了&quot;不可重读&quot;与&quot;幻读&quot;。&quot;幻读&quot;的重点在于莫名其妙的增加了或减少了某些数据，&quot;不可重读&quot;的重点在于莫名的情况下，数据被修改更新了。</p>
+</blockquote>
+<blockquote>
+<p>幻读：在当前事务未提交之前，另一个事务进行insert、update并commit。当前事务的select是不会发现数据更新的(解决了不可重读问题)。但是，当前事务执行完update、insert[并commit]后，再次select，将会看到另一个事务操作后的数据，并且数据也被update了（可以理解为：虽然没看不到，但操作的时候一并更新了“看不到的”数据）。</p>
+</blockquote>
+<p>谈论MySQL事物隔离级别时，前提是所使用的存储引擎得支持事务。 <strong>MyISAM本身是不支持事务的</strong> ，本次例子存储引擎使用的<strong>InnoDB</strong>。</p>
+<p>新建一个表t_account</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists `t_account`;</span><br><span class="line">create table `t_account` (</span><br><span class="line">  `id` int(11) not null ,</span><br><span class="line">  `account` decimal(10, 3) not null,</span><br><span class="line">  primary key (`id`)</span><br><span class="line">) engine = InnoDB default charset = utf8mb4;</span><br><span class="line"></span><br><span class="line">insert into t_account(</span><br><span class="line">  id, account</span><br><span class="line">) values (</span><br><span class="line">    1, 100</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>设置autocommit为false</p>
+<p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set autocommit = 0;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show variables like 'autocommit';</span><br><span class="line">+<span class="comment">---------------+-------+</span></span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+<span class="comment">---------------+-------+</span></span><br><span class="line">| autocommit    | OFF   |</span><br><span class="line">+<span class="comment">---------------+-------+</span></span><br></pre></td></tr></table></figure></p>
+<h4>1. Read-uncommitted（读未提交）</h4>
+<p>在该隔离级别中，所有事务都可以读到其他事务未提交的执行结果。由于读到未提交数据，称之为“赃读”。</p>
+<p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set session transaction isolation level read uncommitted;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select @@tx_isolation;</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">| @@tx_isolation   |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">| READ-UNCOMMITTED |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://1drv.ms/u/s!Ar1MYQzTMlu4iibP5dTnUO-RXXBW?e=5PFKO2" alt="read-uncommitted"></p>
+<p>Q：实际上，我们的数据改变了吗？</p>
+<p>A：答案是否定的，事务只有在commit之后，才会真正的更新到数据库。</p>
+<h4>2. Read-committed（读已提交）</h4>
+<p>这是大多数数据库默认的隔离级别（<strong>但不是MySQL默认级别</strong>），在该隔离级别中，当前会话只能读取到其他事务已提交的数据，解决了“脏读问题”。但是同一事务的不同实例在处理期间，可能会有新的commit，所以同一select可能返回不同的结果，也就是“不可重读”问题。</p>
+<p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set session transaction isolation level read committed;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select @@tx_isolation;</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">| @@tx_isolation   |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">| READ-COMMITTED |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://1drv.ms/u/s!Ar1MYQzTMlu4iihnZ9TndD-IxvCk?e=HVrZwK" alt="read-committed"></p>
+<h4>3. Repeatable-read（可重读）</h4>
+<p>这是MySQL的默认隔离级别，它确认在同一事务的多个实例在并发读取数据时，多次读取也会看到同样的数据行，而不管其他事务是不是已经提交。但是这可能会发生一个更为棘手的问题“幻读”，InnoDB和Falcon存储引擎通过多版本并发控制（MVCC，Multiversion Concurrency Control）机制解决了该问题。</p>
+<ul>
+<li>[ ] 涉及知识点较多，先留空，之后再做总结。具体可参考这篇文章<a href="https://github.com/Yhzhtk/note/issues/42" target="_blank" rel="noopener">Innodb 中 RR 隔离级别能否防止幻读？</a></li>
+</ul>
+<h4>4. Serializable串行化</h4>
+<p>这是最高的隔离级别，它通过强制事务排序，使之不能相互发生冲突，从而解决了幻读的问题。简而言之，Serializable是在数据行上加上共享锁。在这个级别，可能导致大量的锁竞争和超时现象。</p>
+<p>在MySQL中，分别实现了以上四种隔离级别时，有可能产生的问题如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>赃读</th>
+<th>不可重读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read-uncommitted</td>
+<td>☑️</td>
+<td>☑️</td>
+<td>☑️</td>
+</tr>
+<tr>
+<td>Read-committed</td>
+<td>❌</td>
+<td>☑️</td>
+<td>☑️</td>
+</tr>
+<tr>
+<td>Repeatable-read</td>
+<td>❌</td>
+<td>❌</td>
+<td>☑️</td>
+</tr>
+<tr>
+<td>serializable</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    <div>
+      
         
-          
-          前言
-  由于项目需要，确切的说是项目中用到了这个插件，但是需要用到这插件的地方前辈们也已经完成了。这几天闲着没事，想着自己之前没有接触过，网上文档也不是很多，所以写下这篇博客来记录jquery-plot对于几种图表的实现。
-简介
-   Flot是一个Jquery下图表插件，具有简单使用，交互效果，具有吸引力外观特点。目前支持 Internet Explorer 6+, Chrome, Firefox 2+, Safari 3+ and Opera 9.5+ 等浏览器，是一个
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/14/jquery-plugin-flot/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/13/angular2-animation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yhui">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="之喜郎">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/13/angular2-animation/" itemprop="url">
-                  angular2入门之动画指南
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-13T20:02:38+08:00">
-                2017-06-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/angular2/" itemprop="url" rel="index">
-                    <span itemprop="name">angular2</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
           
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/13/angular2-animation/" class="leancloud_visitors" data-flag-title="angular2入门之动画指南">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          
-          前言
-  写这篇文章的时候所使用的是angular2.X,而ng2.x动画相关的api是并入@angular/core这个核心模块的，但是在angular4之后开始独立，引入的方式也有所改。
-关于ng2动画的理解
+      
 
-按照官网上来说，就是在两个状态之间进行转。angular通过在一定时间内将组件内的css样式过渡切换成另一种样式来实现动。是由状态和状态之间的转场效果所定义。动画被定义在@Component元数据。
-需要定义一个动画触发器(triggerName)，在模板中使用[
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/13/angular2-animation/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/11/Git-rebase使用/" rel="next" title="Git rebase使用">
+                <i class="fa fa-chevron-left"></i> Git rebase使用
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/12/angular2-attr/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yhui">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="之喜郎">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/12/angular2-attr/" itemprop="url">
-                  angular2笔记--属性
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-12T15:33:28+08:00">
-                2017-06-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/angular2/" itemprop="url" rel="index">
-                    <span itemprop="name">angular2</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/12/angular2-attr/" class="leancloud_visitors" data-flag-title="angular2笔记--属性">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-          😄 😏 😌
-
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/12/angular2-attr/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/11/angular2-build-development-environment/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yhui">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="之喜郎">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/11/angular2-build-development-environment/" itemprop="url">
-                  angular2入门之开发环境搭建
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-11T21:41:51+08:00">
-                2017-06-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/angular2/" itemprop="url" rel="index">
-                    <span itemprop="name">angular2</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/11/angular2-build-development-environment/" class="leancloud_visitors" data-flag-title="angular2入门之开发环境搭建">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言
-  终于忙完了毕业的一些杂七杂八事情，但是突然的闲下来了，又感觉慌得很(os: 犯贱的命啊)。就想着不依赖angular-cli，写一个入门的小demo(不包含测试),一来呢熟悉一下angular2项目的文件结构;二来呢可以了解一下需要的这些依赖的作用。
-项目结构
-  项目名&quot;demo-by-self&quot;,初始的文件结构如下：
-
-demo-by-self&lt;br/&gt;| —— app&lt;br/&gt;  | —— app.component
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/11/angular2-build-development-environment/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
-
+  </div>
 
 
           </div>
@@ -959,6 +528,10 @@ demo-by-self&lt;br/&gt;| —— app&lt;br/&gt;  | —— app.component
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -978,8 +551,17 @@ demo-by-self&lt;br/&gt;| —— app&lt;br/&gt;  | —— app.component
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg" alt="yhui">
           <p class="site-author-name" itemprop="name">yhui</p>
@@ -1050,6 +632,22 @@ demo-by-self&lt;br/&gt;| —— app&lt;br/&gt;  | —— app.component
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">1. Read-uncommitted（读未提交）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">2. Read-committed（读已提交）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">3. Repeatable-read（可重读）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">4. Serializable串行化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1157,6 +755,10 @@ demo-by-self&lt;br/&gt;| —— app&lt;br/&gt;  | —— app.component
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
