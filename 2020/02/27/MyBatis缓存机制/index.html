@@ -1,0 +1,1118 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="MyBatis 缓存机制,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。 缓存的介质一般是内存，所以读写速度很快。但如果缓存中存放的数据量非常大时，也会用硬盘作为缓存介质。缓存的实现不仅仅要考虑存储的介质，还要考虑到管理缓存的并发访问和缓存">
+<meta name="keywords" content="MyBatis 缓存机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis缓存机制">
+<meta property="og:url" content="http://yoursite.com/2020/02/27/MyBatis缓存机制/index.html">
+<meta property="og:site_name" content="之喜郎">
+<meta property="og:description" content="缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。 缓存的介质一般是内存，所以读写速度很快。但如果缓存中存放的数据量非常大时，也会用硬盘作为缓存介质。缓存的实现不仅仅要考虑存储的介质，还要考虑到管理缓存的并发访问和缓存">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://moguyq.sn.files.1drv.com/y4mJ0JkKri4FClCXvH1DNrawVXnrlYWgA-vJJ9XFvSzHuiQCgnVJXb1rXhWVP0LTPC4l2hicr4j9QZHmy3QVwOwX2p7DPr52SBjjb_ax_NaPldMOJ3Jv3V4Enu6sl--68eoULckBIRH30lpxWaGzFQ2o5b1PryhozLw1T7bCwEGN7VoO3flps_sJpuNNY1Hz4LhYrZE0c5cQI7nPtqJz1pkJw?width=660&height=387&cropmode=none">
+<meta property="og:image" content="https://nyguyq.sn.files.1drv.com/y4mfv31clMG5aeHb-NqhdgBgmgTc3KUc4WbhWAnYL_ZfFiXv-oZgr6L7zW2GEZPQeM1I6jejbrOqBzgfvF9CnZJ6lU5-W-oJxAKNO3hDQkST7THzODSIxGKJ2sT_qG-qnNiUI53RvgF_suzdupmr8VxATn1jb5siGv6nJoTeILiMDIsIYgYQM9-ysVBjIl5eRBlV8Qotk7AA4OBVlPrAWLngA?width=660&height=514&cropmode=none">
+<meta property="og:image" content="https://niguyq.sn.files.1drv.com/y4mvvfoHv52alJg7N2MiNbanG5ZNVj2Lu8VXHsv9MhsQfV51ABfqe37RLxb8Hx1qP_SXbDs2UPTANie3t2AiLvQRFpk1OtvUWSlTm_cVNsRMOEn1HdU_uES6PkMVX41QC4bZ4u7d9FQnV06eUi93ZeQgaqJIA8g_35RM4BkpHGh89fqwU74DOaa7Zw4f6pJ7yu3lKW8WWIcOoJzYqoc8UR8nQ?width=660&height=239&cropmode=none">
+<meta property="og:image" content="https://n4guyq.sn.files.1drv.com/y4mkshQzwdaWAEw27-aqByZkq8ueD2iYteTlD2Zw5YMthXAoxqtee672quV3Wdb9XJJm2r7yPR6ZJKHIc5ZrX_rStwDZMClNgGO6bfx3o3X4Q6F5ipN3ctFXtGRq3KHpKCn8YvihqXTLz40IY-4fhFUsIpqseiaXeDYS7AwsRw9Wu3_ugtMeFrc85wWnlQGYa13lkuljHtx1mmrm2OxRnEGBw?width=660&height=200&cropmode=none">
+<meta property="og:image" content="https://noguyq.sn.files.1drv.com/y4mXUEDUTveZwuT0okRBDo4o-Ron9wUwzYxqMVJdKCwzcZMEm47_K-XJwJ9_KJUO-w1JCSuQhHA-lI8TPX9Ng2LM2jjWg55Ozlo3l-P_PAi7WCjj_CRdWDaZrmu2jyklPBCnsHteD4_R6U5LbSwYQYjF71WH593LkllkFfGSKWzGZMTErb1SG9oK4fb0DrBTu9H_HDRBAgC33NsfUcd1tOeBA?width=660&height=234&cropmode=none">
+<meta property="og:updated_time" content="2020-02-27T02:22:21.913Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis缓存机制">
+<meta name="twitter:description" content="缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。 缓存的介质一般是内存，所以读写速度很快。但如果缓存中存放的数据量非常大时，也会用硬盘作为缓存介质。缓存的实现不仅仅要考虑存储的介质，还要考虑到管理缓存的并发访问和缓存">
+<meta name="twitter:image" content="https://moguyq.sn.files.1drv.com/y4mJ0JkKri4FClCXvH1DNrawVXnrlYWgA-vJJ9XFvSzHuiQCgnVJXb1rXhWVP0LTPC4l2hicr4j9QZHmy3QVwOwX2p7DPr52SBjjb_ax_NaPldMOJ3Jv3V4Enu6sl--68eoULckBIRH30lpxWaGzFQ2o5b1PryhozLw1T7bCwEGN7VoO3flps_sJpuNNY1Hz4LhYrZE0c5cQI7nPtqJz1pkJw?width=660&height=387&cropmode=none">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/27/MyBatis缓存机制/">
+
+
+
+
+
+  <title> MyBatis缓存机制 | 之喜郎 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">之喜郎</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/27/MyBatis缓存机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yhui">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="之喜郎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MyBatis缓存机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-27T10:21:08+08:00">
+                2020-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ORM-数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">ORM 数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/02/27/MyBatis缓存机制/" class="leancloud_visitors" data-flag-title="MyBatis缓存机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。</p>
+<p>缓存的介质一般是内存，所以读写速度很快。但如果缓存中存放的数据量非常大时，也会用硬盘作为缓存介质。缓存的实现不仅仅要考虑存储的介质，还要考虑到管理缓存的并发访问和缓存数据的生命周期。</p>
+<p>当应用频繁访问数据库时，必然会导致数据库性能的下降。假如我们在内存中开辟出一部分“特殊区域”，这个区域用来存放需要的数据。当数据查询时，先在“特殊区域”进行查询，查询到则直接返回；未查询到，再去访问数据库。这样就减少了与数据库的交互，在不降低数据库访问性能前提下，也增加了数据响应的速度，这就是“缓存机制”。</p>
+</blockquote>
+<h3>一级缓存</h3>
+<h4>介绍</h4>
+<p>一级缓存指的是Session缓存，作用域默认为session。也就是在同一个SqlSession中，执行相同的sql，第一次会到数据库中查询，并写到缓存中；第二次在缓存中查到则直接返回；当执行SQL中间执行了增删改操作，会将缓存清空。</p>
+<p>一级缓存不能关闭，如果不想使用的话，可以将scope设置为SATAMENT，这样每执行完一个STATEMENT都会将缓存清空。</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis.configuration.local-cache-scope=statement  // 若想使用的话，不用指定，默认就是session</span><br></pre></td></tr></table></figure></p>
+<h4>配置</h4>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># application.properties</span><br><span class="line">spring.datasource.driver-class-name=com.mysql.jdbc.Driver</span><br><span class="line">spring.datasource.url = jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;useSSL=false</span><br><span class="line">spring.datasource.username = root</span><br><span class="line">spring.datasource.password = rootroot</span><br><span class="line">        </span><br><span class="line">mybatis.mapper-locations=classpath:mapper/UserMapper.xml</span><br><span class="line">mybatis.configuration.local-cache-scope=session</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// User.java</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zhixilang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0</span></span><br><span class="line"><span class="comment"> * date 2020-02-24 11:20</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer createTime;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User&#123;"</span> +</span><br><span class="line">                <span class="string">"id="</span> + id +</span><br><span class="line">                <span class="string">", name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", createTime="</span> + createTime +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span> ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper PUBLIC <span class="string">"-//mybatis.org//DTD Mapper 3.0//EN"</span> <span class="string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span> &gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">"pers.zhixilang.mybatiscache.mapper.UserMapper"</span>&gt;</span><br><span class="line">    &lt;update id=<span class="string">"updateName"</span>&gt;</span><br><span class="line">        UPDATE t_user SET name = #&#123;name&#125; WHERE id = #&#123;id&#125;</span><br><span class="line">    &lt;/update&gt;</span><br><span class="line"></span><br><span class="line">    &lt;resultMap id=<span class="string">"userMap"</span> type=<span class="string">"pers.zhixilang.mybatiscache.entity.User"</span>&gt;</span><br><span class="line">        &lt;result column=<span class="string">"id"</span> property=<span class="string">"id"</span>/&gt;</span><br><span class="line">        &lt;result property=<span class="string">"name"</span> column=<span class="string">"name"</span>/&gt;</span><br><span class="line">        &lt;result property=<span class="string">"createTime"</span> column=<span class="string">"create_time"</span>/&gt;</span><br><span class="line">    &lt;/resultMap&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;select id=<span class="string">"getUser"</span> resultMap=<span class="string">"userMap"</span>&gt;</span><br><span class="line">        select *</span><br><span class="line">        from t_user</span><br><span class="line">        where id = #&#123;id&#125;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure></p>
+<h4>手动创建SqlSession</h4>
+<p>编写测试类，查询数据库两次；增加对数据库的更新操作后，再次查询数据库：</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">SessionTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> SqlSessionFactory sessionFactory;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLocalCache</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 自动提交事务</span></span><br><span class="line">        SqlSession sqlSession = sessionFactory.openSession(<span class="keyword">true</span>);</span><br><span class="line">        UserMapper userMapper = sqlSession.getMapper(UserMapper<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(userMapper.getUser(<span class="number">11</span>));</span><br><span class="line">        System.out.println(userMapper.getUser(<span class="number">11</span>));</span><br><span class="line">	      userMapper.updateName(<span class="string">"haha"</span>, <span class="number">11</span>);</span><br><span class="line">        System.out.println(userMapper.getUser(<span class="number">11</span>));</span><br><span class="line"></span><br><span class="line">        sqlSession.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果：</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">2020-02-25 11:22:28.836  INFO 39432 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...</span><br><span class="line">2020-02-25 11:22:28.840  WARN 39432 --- [           main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.</span><br><span class="line">2020-02-25 11:22:29.066  INFO 39432 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.</span><br><span class="line">2020-02-25 11:22:29.074 DEBUG 39432 --- [           main] p.z.m.mapper.UserMapper.getUser          : ==&gt;  Preparing: select * from t_user where id = ? </span><br><span class="line">2020-02-25 11:22:29.102 DEBUG 39432 --- [           main] p.z.m.mapper.UserMapper.getUser          : ==&gt; Parameters: 11(Integer)</span><br><span class="line">2020-02-25 11:22:29.138 DEBUG 39432 --- [           main] p.z.m.mapper.UserMapper.getUser          : &lt;==      Total: 1</span><br><span class="line">User&#123;id=11, name=&apos;hello&apos;, createTime=0&#125;</span><br><span class="line">User&#123;id=11, name=&apos;hello&apos;, createTime=0&#125;</span><br><span class="line">2020-02-25 11:22:29.139 DEBUG 39432 --- [           main] p.z.m.mapper.UserMapper.updateName       : ==&gt;  Preparing: UPDATE t_user SET name = ? WHERE id = ? </span><br><span class="line">2020-02-25 11:22:29.139 DEBUG 39432 --- [           main] p.z.m.mapper.UserMapper.updateName       : ==&gt; Parameters: haha(String), 11(Integer)</span><br><span class="line">2020-02-25 11:22:29.196 DEBUG 39432 --- [           main] p.z.m.mapper.UserMapper.updateName       : &lt;==    Updates: 1</span><br><span class="line">2020-02-25 11:22:29.197 DEBUG 39432 --- [           main] p.z.m.mapper.UserMapper.getUser          : ==&gt;  Preparing: select * from t_user where id = ? </span><br><span class="line">2020-02-25 11:22:29.197 DEBUG 39432 --- [           main] p.z.m.mapper.UserMapper.getUser          : ==&gt; Parameters: 11(Integer)</span><br><span class="line">2020-02-25 11:22:29.199 DEBUG 39432 --- [           main] p.z.m.mapper.UserMapper.getUser          : &lt;==      Total: 1</span><br><span class="line">User&#123;id=11, name=&apos;haha&apos;, createTime=0&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>可以看到只有第一次是去查询了数据库，后两次都是使用的一级缓存。</li>
+<li>当执行了Update之后，缓存清空，重新去查询了数据库。</li>
+</ul>
+<h4>常规集成</h4>
+<p>在Spring的常规使用中，我们通常的做法是这样：</p>
+<ol>
+<li></li>
+</ol>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">		<span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/test"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        userService.getUser(<span class="number">11</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"hello"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUser</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        System.out.println(userMapper.getUser(id));</span><br><span class="line">        System.out.println(userMapper.getUser(id));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果：</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">2020-02-25 11:26:21.198  INFO 39457 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...</span><br><span class="line">2020-02-25 11:26:21.204  WARN 39457 --- [           main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.</span><br><span class="line">2020-02-25 11:26:21.470  INFO 39457 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.</span><br><span class="line">2020-02-25 11:26:21.477 DEBUG 39457 --- [           main] p.z.m.mapper.UserMapper.getUser          : ==&gt;  Preparing: select * from t_user where id = ? </span><br><span class="line">2020-02-25 11:26:21.516 DEBUG 39457 --- [           main] p.z.m.mapper.UserMapper.getUser          : ==&gt; Parameters: 11(Integer)</span><br><span class="line">2020-02-25 11:26:21.564 DEBUG 39457 --- [           main] p.z.m.mapper.UserMapper.getUser          : &lt;==      Total: 1</span><br><span class="line">User&#123;id=11, name=&apos;haha&apos;, createTime=0&#125;</span><br><span class="line">2020-02-25 11:26:21.566 DEBUG 39457 --- [           main] p.z.m.mapper.UserMapper.getUser          : ==&gt;  Preparing: select * from t_user where id = ? </span><br><span class="line">2020-02-25 11:26:21.567 DEBUG 39457 --- [           main] p.z.m.mapper.UserMapper.getUser          : ==&gt; Parameters: 11(Integer)</span><br><span class="line">2020-02-25 11:26:21.568 DEBUG 39457 --- [           main] p.z.m.mapper.UserMapper.getUser          : &lt;==      Total: 1</span><br><span class="line">User&#123;id=11, name=&apos;haha&apos;, createTime=0&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到<strong>一级缓存未生效！</strong></p>
+<ol start="2">
+<li>接下来在service的方法上加上注解<code>@Transactional</code>，打印结果：</li>
+</ol>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2020-02-25 13:58:09.208 DEBUG 41099 --- [nio-8080-exec-3] p.z.m.mapper.UserMapper.getUser          : ==&gt;  Preparing: select * from t_user where id = ? </span><br><span class="line">2020-02-25 13:58:09.208 DEBUG 41099 --- [nio-8080-exec-3] p.z.m.mapper.UserMapper.getUser          : ==&gt; Parameters: 11(Integer)</span><br><span class="line">2020-02-25 13:58:09.213 DEBUG 41099 --- [nio-8080-exec-3] p.z.m.mapper.UserMapper.getUser          : &lt;==      Total: 1</span><br><span class="line">User&#123;id=11, name=&apos;haha&apos;, createTime=0&#125;</span><br><span class="line">User&#123;id=11, name=&apos;haha&apos;, createTime=0&#125;</span><br></pre></td></tr></table></figure></p>
+<h4>源码跟踪</h4>
+<p>跟踪源码，会发现执行流程如下：</p>
+<ol>
+<li>
+<p>以<code>MapperProxy</code>（SpringBoot启动时，会在MapperRegister中保存mapper的代理类，注入到service的也就是MapperProxy类）为入口，会走<code>MapperProxy</code>中的<code>invoke</code>方法，最终是通过<code>mapperMethod.execute(sqlSession. args)</code></p>
+<p><img src="https://moguyq.sn.files.1drv.com/y4mJ0JkKri4FClCXvH1DNrawVXnrlYWgA-vJJ9XFvSzHuiQCgnVJXb1rXhWVP0LTPC4l2hicr4j9QZHmy3QVwOwX2p7DPr52SBjjb_ax_NaPldMOJ3Jv3V4Enu6sl--68eoULckBIRH30lpxWaGzFQ2o5b1PryhozLw1T7bCwEGN7VoO3flps_sJpuNNY1Hz4LhYrZE0c5cQI7nPtqJz1pkJw?width=660&amp;height=387&amp;cropmode=none" alt="MapperProxy"></p>
+<ol start="2">
+<li>
+<p>进入MapperMethod的execute方法，会根据select、insert、update 来走不同的方法。本次测试的SELECT返回类型为Object，所将会走selectOne方法。
+<img src="https://nyguyq.sn.files.1drv.com/y4mfv31clMG5aeHb-NqhdgBgmgTc3KUc4WbhWAnYL_ZfFiXv-oZgr6L7zW2GEZPQeM1I6jejbrOqBzgfvF9CnZJ6lU5-W-oJxAKNO3hDQkST7THzODSIxGKJ2sT_qG-qnNiUI53RvgF_suzdupmr8VxATn1jb5siGv6nJoTeILiMDIsIYgYQM9-ysVBjIl5eRBlV8Qotk7AA4OBVlPrAWLngA?width=660&amp;height=514&amp;cropmode=none" alt="MapperMethod"></p>
+</li>
+<li>
+<p>接着进入<code>SqlSessionTemplete</code>方法，再看<code>SqlSessionInterceptor</code>,<code>SqlSessionInterceptor</code>是<code>SqlSessionTemplate</code>的内部类:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SqlSessionTemplate</span> <span class="keyword">implements</span> <span class="title">SqlSession</span>, <span class="title">DisposableBean</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ...omit..</span></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">SqlSessionInterceptor</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">       SqlSession sqlSession = getSqlSession(</span><br><span class="line">           SqlSessionTemplate.<span class="keyword">this</span>.sqlSessionFactory,</span><br><span class="line">           SqlSessionTemplate.<span class="keyword">this</span>.executorType,</span><br><span class="line">           SqlSessionTemplate.<span class="keyword">this</span>.exceptionTranslator);</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">         Object result = method.invoke(sqlSession, args);</span><br><span class="line">         <span class="comment">//如果尚未开启事物(事物不是由spring来管理)，则sqlSession直接提交</span></span><br><span class="line">         <span class="keyword">if</span> (!isSqlSessionTransactional(sqlSession, SqlSessionTemplate.<span class="keyword">this</span>.sqlSessionFactory)) &#123;</span><br><span class="line">           <span class="comment">// force commit even on non-dirty sessions because some databases require</span></span><br><span class="line">           <span class="comment">// a commit/rollback before calling close()</span></span><br><span class="line">           <span class="comment">// 手动commit</span></span><br><span class="line">           sqlSession.commit(<span class="keyword">true</span>);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">return</span> result;</span><br><span class="line">       &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">         Throwable unwrapped = unwrapThrowable(t);</span><br><span class="line">         <span class="keyword">if</span> (SqlSessionTemplate.<span class="keyword">this</span>.exceptionTranslator != <span class="keyword">null</span> &amp;&amp; unwrapped <span class="keyword">instanceof</span> PersistenceException) &#123;</span><br><span class="line">           <span class="comment">// release the connection to avoid a deadlock if the translator is no loaded. See issue #22</span></span><br><span class="line">           closeSqlSession(sqlSession, SqlSessionTemplate.<span class="keyword">this</span>.sqlSessionFactory);</span><br><span class="line">           sqlSession = <span class="keyword">null</span>;</span><br><span class="line">           Throwable translated = SqlSessionTemplate.<span class="keyword">this</span>.exceptionTranslator.translateExceptionIfPossible((PersistenceException) unwrapped);</span><br><span class="line">           <span class="keyword">if</span> (translated != <span class="keyword">null</span>) &#123;</span><br><span class="line">             unwrapped = translated;</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">throw</span> unwrapped;</span><br><span class="line">       &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">         <span class="comment">//一般情况下，默认都是关闭sqlSession</span></span><br><span class="line">         <span class="keyword">if</span> (sqlSession != <span class="keyword">null</span>) &#123;</span><br><span class="line">           closeSqlSession(sqlSession, SqlSessionTemplate.<span class="keyword">this</span>.sqlSessionFactory);</span><br><span class="line">         &#125;</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再看<code>getSqlSession</code>方法，这个方法是在<code>SqlSessionUtils.java</code>中的：</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SqlSession <span class="title">getSqlSession</span><span class="params">(SqlSessionFactory sessionFactory, ExecutorType executorType, PersistenceExceptionTranslator exceptionTranslator)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  notNull(sessionFactory, NO_SQL_SESSION_FACTORY_SPECIFIED);</span><br><span class="line">  notNull(executorType, NO_EXECUTOR_TYPE_SPECIFIED);</span><br><span class="line">  <span class="comment">//获取holder</span></span><br><span class="line">  SqlSessionHolder holder = (SqlSessionHolder) TransactionSynchronizationManager.getResource(sessionFactory);</span><br><span class="line">  <span class="comment">//从sessionHolder中获取SqlSession</span></span><br><span class="line">  SqlSession session = sessionHolder(executorType, holder);</span><br><span class="line">  <span class="keyword">if</span> (session != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> session;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (LOGGER.isDebugEnabled()) &#123;</span><br><span class="line">    LOGGER.debug(<span class="string">"Creating a new SqlSession"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//如果sqlSession不存在，则创建一个新的</span></span><br><span class="line">  session = sessionFactory.openSession(executorType);</span><br><span class="line">  <span class="comment">//将sqlSession注册在sessionHolder中</span></span><br><span class="line">  registerSessionHolder(sessionFactory, executorType, exceptionTranslator, session);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> session;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">registerSessionHolder</span><span class="params">(SqlSessionFactory sessionFactory, ExecutorType executorType,</span></span></span><br><span class="line"><span class="function"><span class="params">      PersistenceExceptionTranslator exceptionTranslator, SqlSession session)</span> </span>&#123;</span><br><span class="line">    SqlSessionHolder holder;</span><br><span class="line">    <span class="comment">//在开启事物的情况下</span></span><br><span class="line">    <span class="keyword">if</span> (TransactionSynchronizationManager.isSynchronizationActive()) &#123;</span><br><span class="line">      Environment environment = sessionFactory.getConfiguration().getEnvironment();</span><br><span class="line"></span><br><span class="line">      <span class="comment">//由spring来管理事物的情况下</span></span><br><span class="line">      <span class="keyword">if</span> (environment.getTransactionFactory() <span class="keyword">instanceof</span> SpringManagedTransactionFactory) &#123;</span><br><span class="line">        <span class="keyword">if</span> (LOGGER.isDebugEnabled()) &#123;</span><br><span class="line">          LOGGER.debug(<span class="string">"Registering transaction synchronization for SqlSession ["</span> + session + <span class="string">"]"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        holder = <span class="keyword">new</span> SqlSessionHolder(session, executorType, exceptionTranslator);</span><br><span class="line">        <span class="comment">//将sessionFactory绑定在sessionHolde相互绑定</span></span><br><span class="line">        TransactionSynchronizationManager.bindResource(sessionFactory, holder);</span><br><span class="line">        TransactionSynchronizationManager.registerSynchronization(<span class="keyword">new</span> SqlSessionSynchronization(holder, sessionFactory));</span><br><span class="line">        holder.setSynchronizedWithTransaction(<span class="keyword">true</span>);</span><br><span class="line">        holder.requested();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (TransactionSynchronizationManager.getResource(environment.getDataSource()) == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (LOGGER.isDebugEnabled()) &#123;</span><br><span class="line">            LOGGER.debug(<span class="string">"SqlSession ["</span> + session + <span class="string">"] was not registered for synchronization because DataSource is not transactional"</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> TransientDataAccessResourceException(</span><br><span class="line">              <span class="string">"SqlSessionFactory must be using a SpringManagedTransactionFactory in order to use Spring transaction synchronization"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (LOGGER.isDebugEnabled()) &#123;</span><br><span class="line">        LOGGER.debug(<span class="string">"SqlSession ["</span> + session + <span class="string">"] was not registered for synchronization because synchronization is not active"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>再看<code>TransactionSynchronizationManager.bindResource</code>的方法:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TransactionSynchronizationManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//omit...</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;Map&lt;Object, Object&gt;&gt; resources =</span><br><span class="line">            <span class="keyword">new</span> NamedThreadLocal&lt;Map&lt;Object, Object&gt;&gt;(<span class="string">"Transactional resources"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// key:sessionFactory, value:SqlSessionHolder(Connection)</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bindResource</span><span class="params">(Object key, Object value)</span> <span class="keyword">throws</span> IllegalStateException </span>&#123;</span><br><span class="line">        Object actualKey = TransactionSynchronizationUtils.unwrapResourceIfNecessary(key);</span><br><span class="line">        Assert.notNull(value, <span class="string">"Value must not be null"</span>);</span><br><span class="line">        <span class="comment">//从threadLocal类型的resources中获取与当前线程绑定的资源，如sessionFactory，Connection等等</span></span><br><span class="line">        Map&lt;Object, Object&gt; map = resources.get();</span><br><span class="line">        <span class="comment">// set ThreadLocal Map if none found</span></span><br><span class="line">        <span class="keyword">if</span> (map == <span class="keyword">null</span>) &#123;</span><br><span class="line">          map = <span class="keyword">new</span> HashMap&lt;Object, Object&gt;();</span><br><span class="line">          resources.set(map);</span><br><span class="line">        &#125;</span><br><span class="line">        Object oldValue = map.put(actualKey, value);</span><br><span class="line">        <span class="comment">// Transparently suppress a ResourceHolder that was marked as void...</span></span><br><span class="line">        <span class="keyword">if</span> (oldValue <span class="keyword">instanceof</span> ResourceHolder &amp;&amp; ((ResourceHolder) oldValue).isVoid()) &#123;</span><br><span class="line">          oldValue = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (oldValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Already value ["</span> + oldValue + <span class="string">"] for key ["</span> +</span><br><span class="line">              actualKey + <span class="string">"] bound to thread ["</span> + Thread.currentThread().getName() + <span class="string">"]"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (logger.isTraceEnabled()) &#123;</span><br><span class="line">          logger.trace(<span class="string">"Bound value ["</span> + value + <span class="string">"] for key ["</span> + actualKey + <span class="string">"] to thread ["</span> +</span><br><span class="line">              Thread.currentThread().getName() + <span class="string">"]"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>前面的长篇大论，就是为使用ThreadLocal将当前线程绑定创建SqlSession相关的资源，从而获取同一个SqlSession</strong></p>
+</li>
+</ol>
+</li>
+</ol>
+<h4>小结</h4>
+<p>当Spring整合MyBatis后：</p>
+<ul>
+<li>在未开启事物的情况之下，每次查询，Spring都会关闭旧的SqlSession而创建新的SqlSession，所以此时的一级缓存是没有作用的</li>
+<li>在开启事物的情况之下，Spring使用ThreadLocal获取当前资源绑定同一个SqlSession，因此此时一级缓存是有效的</li>
+<li>要想一级缓存生效，也可以像测试类中一样，手动管理SqlSession（<strong>设置自动提交事物</strong>），以此保证使用的是同一个SqlSession。</li>
+</ul>
+<h3>二级缓存</h3>
+<h4>介绍</h4>
+<p>Mybatis的二级缓存是指mapper映射文件。二级缓存的作用域是同一个namespace下的mapper映射文件内容，即二级缓存被多个SqlSession共享，是一个全局的变量。</p>
+<p>当开启缓存后，数据的查询执行的流程就是 二级缓存 -&gt; 一级缓存 -&gt; 数据库。</p>
+<h4>配置</h4>
+<p>Mybatis需要手动设置启动二级缓存。</p>
+<p>二级缓存是默认启用的(要生效需要对每个Mapper进行配置)，如想取消，则可以通过Mybatis配置文件中的元素下的子元素来指定cacheEnabled为false。</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;settings&gt;</span><br><span class="line">  &lt;setting name=&quot;cacheEnabled&quot; value=&quot;false&quot; /&gt;</span><br><span class="line">&lt;/settings&gt;</span><br><span class="line"></span><br><span class="line">// 和SpringBoot整合时，也可采用下列配置</span><br><span class="line">mybatis.configuration.cache-enabled=false</span><br></pre></td></tr></table></figure></p>
+<p>cacheEnabled默认是启用的，只有在该值为true的时候，底层使用的Executor才是支持二级缓存的CachingExecutor。具体可参考Mybatis的核心配置类org.apache.ibatis.session.Configuration的newExecutor方法实现。
+可以通过源码看看</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Executor <span class="title">newExecutor</span><span class="params">(Transaction transaction)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">this</span>.newExecutor(transaction, <span class="keyword">this</span>.defaultExecutorType);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Executor <span class="title">newExecutor</span><span class="params">(Transaction transaction, ExecutorType executorType)</span> </span>&#123;</span><br><span class="line">       executorType = executorType == <span class="keyword">null</span> ? <span class="keyword">this</span>.defaultExecutorType : executorType;</span><br><span class="line">       executorType = executorType == <span class="keyword">null</span> ? ExecutorType.SIMPLE : executorType;</span><br><span class="line">       Object executor;</span><br><span class="line">       <span class="keyword">if</span> (ExecutorType.BATCH == executorType) &#123;</span><br><span class="line">           executor = <span class="keyword">new</span> BatchExecutor(<span class="keyword">this</span>, transaction);</span><br><span class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ExecutorType.REUSE == executorType) &#123;</span><br><span class="line">           executor = <span class="keyword">new</span> ReuseExecutor(<span class="keyword">this</span>, transaction);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           executor = <span class="keyword">new</span> SimpleExecutor(<span class="keyword">this</span>, transaction);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (<span class="keyword">this</span>.cacheEnabled) &#123;</span><br><span class="line">         	 <span class="comment">// 设置为true才执行的</span></span><br><span class="line">           executor = <span class="keyword">new</span> CachingExecutor((Executor)executor);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       Executor executor = (Executor)<span class="keyword">this</span>.interceptorChain.pluginAll(executor);</span><br><span class="line">       <span class="keyword">return</span> executor;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>要使用二级缓存除了上面一个配置外，我们还需要在我们每个DAO对应的Mapper.xml文件中定义需要使用的cache。</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mapper namespace=&quot;...UserMapper&quot;&gt;</span><br><span class="line">    &lt;cache/&gt;&lt;!-- 加上该句即可，使用默认配置、还有另外一种方式，在后面写出 --&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure></p>
+<p>具体可以看org.apache.ibatis.executor.CachingExecutor类的以下实现
+其中使用的cache就是我们在对应的Mapper.xml中定义的cache。</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public &lt;E&gt; List&lt;E&gt; query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException &#123;</span><br><span class="line">    BoundSql boundSql = ms.getBoundSql(parameterObject);</span><br><span class="line">    CacheKey key = this.createCacheKey(ms, parameterObject, rowBounds, boundSql);</span><br><span class="line">    return this.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public &lt;E&gt; List&lt;E&gt; query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql) throws SQLException &#123;</span><br><span class="line">    Cache cache = ms.getCache();</span><br><span class="line">    if (cache != null) &#123;//第一个条件 定义需要使用的cache  </span><br><span class="line">        this.flushCacheIfRequired(ms);</span><br><span class="line">        if (ms.isUseCache() &amp;&amp; resultHandler == null) &#123;//第二个条件 需要当前的查询语句是配置了使用cache的，即下面源码的useCache()是返回true的  默认是true</span><br><span class="line">            this.ensureNoOutParams(ms, parameterObject, boundSql);</span><br><span class="line">            List&lt;E&gt; list = (List)this.tcm.getObject(cache, key);</span><br><span class="line">            if (list == null) &#123;</span><br><span class="line">                list = this.delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);</span><br><span class="line">                this.tcm.putObject(cache, key, list);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return list;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return this.delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还有一个条件就是需要当前的查询语句是配置了使用cache的，即上面源码的useCache()是返回true的，默认情况下所有select语句的useCache都是true，如果我们在启用了二级缓存后，有某个查询语句是我们不想缓存的，则可以通过指定其useCache为false来达到对应的效果。</p>
+<p>如果我们不想该语句缓存，可使用<code>useCache=&quot;false&quot;</code>。</p>
+<p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=<span class="string">"getUser"</span> resultMap=<span class="string">"userMap"</span> useCache=<span class="string">"false"</span>&gt;</span><br><span class="line">        select *</span><br><span class="line">        from t_user</span><br><span class="line">        where id = #&#123;id&#125;</span><br><span class="line">    &lt;/select&gt;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>上面说了要想使用二级缓存，需要在每个DAO对应的Mapper.xml文件中定义其中的查询语句需要使用cache来缓存数据的。
+这有两种方式可以定义，一种是通过cache元素定义，一种是通过cache-ref元素来定义。
+需要注意的是。对于同一个Mapper来讲，只能使用一个Cache，当同时使用了cache和cache-ref时，cache定义的优先级更高；Mapper使用的Cache是与我们的Mapper对应的namespace绑定的，一个namespace最多只会有一个Cache与其绑定。</p>
+<ul>
+<li>cache元素定义
+使用cache元素来定义使用的Cache时，最简单的做法是直接在对应的Mapper.xml文件中指定一个空的元素(看前面的代码)，这个时候Mybatis会按照默认配置创建一个Cache对象，准备的说是PerpetualCache对象，更准确的说是LruCache对象</li>
+<li>cache-ref元素定义
+cache-ref元素可以用来指定其它Mapper.xml中定义的Cache，有的时候可能我们多个不同的Mapper需要共享同一个缓存。如果希望在MapperA中缓存的内容在MapperB中可以直接命中，这个时候我们就可以考虑使用cache-ref，这种场景只需要保证它们的缓存的Key是一致的即可命中，二级缓存的Key是通过Executor接口的createCacheKey()方法生成的，其实现基本都是BaseExecutor，源码参见<code>org.apache.ibatis.executor.createCacheKey()</code></li>
+</ul>
+</blockquote>
+<h4>测试</h4>
+<ol>
+<li>单表单mapper：</li>
+</ol>
+<p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"pers.zhixilang.mybatiscache.mapper.UserMapper"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">cache</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateName"</span>&gt;</span></span><br><span class="line">        UPDATE t_user SET name = #&#123;name&#125; WHERE id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"userMap"</span> <span class="attr">type</span>=<span class="string">"pers.zhixilang.mybatiscache.entity.User"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"id"</span> <span class="attr">property</span>=<span class="string">"id"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"name"</span> <span class="attr">column</span>=<span class="string">"name"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"createTime"</span> <span class="attr">column</span>=<span class="string">"create_time"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"getUser"</span> <span class="attr">resultMap</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">        select *</span><br><span class="line">        from t_user</span><br><span class="line">        where id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">SecondLevelCacheTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(userMapper.getUser(<span class="number">11</span>));</span><br><span class="line">        System.out.println(userMapper.getUser(<span class="number">11</span>));</span><br><span class="line">        userMapper.updateName(<span class="string">"haha"</span>, <span class="number">11</span>);</span><br><span class="line">        System.out.println(userMapper.getUser(<span class="number">11</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果：</p>
+<p><img src="https://niguyq.sn.files.1drv.com/y4mvvfoHv52alJg7N2MiNbanG5ZNVj2Lu8VXHsv9MhsQfV51ABfqe37RLxb8Hx1qP_SXbDs2UPTANie3t2AiLvQRFpk1OtvUWSlTm_cVNsRMOEn1HdU_uES6PkMVX41QC4bZ4u7d9FQnV06eUi93ZeQgaqJIA8g_35RM4BkpHGh89fqwU74DOaa7Zw4f6pJ7yu3lKW8WWIcOoJzYqoc8UR8nQ?width=660&amp;height=239&amp;cropmode=none" alt="执行结果"></p>
+<ol start="2">
+<li>
+<p>验证MyBatis的二级缓存不适应用于映射文件中存在多表查询的情况。</p>
+<p>通常我们会为每个单表创建单独的映射文件，由于MyBatis的二级缓存是基于<code>namespace</code>的，多表查询语句所在的<code>namspace</code>无法感应到其他<code>namespace</code>中的语句对多表查询中涉及的表进行的修改，引发脏数据问题。</p>
+<p>新增<code>CourseMapper.xml</code>和<code>CourseMapper.java</code></p>
+<p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"pers.zhixilang.mybatiscache.mapper.CourseMapper"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">cache</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateUserName"</span>&gt;</span></span><br><span class="line">        UPDATE t_user SET name = #&#123;name&#125; WHERE id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CourseMapper</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateUserName</span><span class="params">(@Param(<span class="string">"name"</span>)</span> String name,</span></span><br><span class="line"><span class="function">                        @<span class="title">Param</span><span class="params">(<span class="string">"id"</span>)</span> Integer id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试：</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MultiMapperTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> CourseMapper courseMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">secondLevelCacheTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(userMapper.getUser(<span class="number">11</span>));</span><br><span class="line">        System.out.println(userMapper.getUser(<span class="number">11</span>));</span><br><span class="line">        courseMapper.updateUserName(<span class="string">"hehe"</span>, <span class="number">11</span>);</span><br><span class="line">        System.out.println(userMapper.getUser(<span class="number">11</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果:</p>
+<p><img src="https://n4guyq.sn.files.1drv.com/y4mkshQzwdaWAEw27-aqByZkq8ueD2iYteTlD2Zw5YMthXAoxqtee672quV3Wdb9XJJm2r7yPR6ZJKHIc5ZrX_rStwDZMClNgGO6bfx3o3X4Q6F5ipN3ctFXtGRq3KHpKCn8YvihqXTLz40IY-4fhFUsIpqseiaXeDYS7AwsRw9Wu3_ugtMeFrc85wWnlQGYa13lkuljHtx1mmrm2OxRnEGBw?width=660&amp;height=200&amp;cropmode=none" alt="multi-mapper"></p>
+</li>
+</ol>
+<ol start="3">
+<li>
+<p>为了解决脏数据问题，可以使用Cache ref，让<code>RoleMapper</code>引用<code>UserMapper</code>命名空间，这样两个映射文件对应的SQL操作都使用的是同一块缓存了。</p>
+<p><code>CourseMapper.xml</code>中<code>&lt;cache /&gt;</code> 修改为<code>&lt;cache-ref namespace=&quot;pers.zhixilang.mybatiscache.mapper.UserMapper&quot; /&gt;</code>。</p>
+<p>执行结果如下：</p>
+<p><img src="https://noguyq.sn.files.1drv.com/y4mXUEDUTveZwuT0okRBDo4o-Ron9wUwzYxqMVJdKCwzcZMEm47_K-XJwJ9_KJUO-w1JCSuQhHA-lI8TPX9Ng2LM2jjWg55Ozlo3l-P_PAi7WCjj_CRdWDaZrmu2jyklPBCnsHteD4_R6U5LbSwYQYjF71WH593LkllkFfGSKWzGZMTErb1SG9oK4fb0DrBTu9H_HDRBAgC33NsfUcd1tOeBA?width=660&amp;height=234&amp;cropmode=none" alt="multi-mapper-cacheref"></p>
+</li>
+</ol>
+<h4>小结</h4>
+<ol>
+<li>MyBatis的二级缓存相对于一级缓存来说，实现了<code>SqlSession</code>之间缓存数据的共享，同时粒度更加的细，能够到<code>namespace</code>级别，通过Cache接口实现类不同的组合，对Cache的可控性也更强。</li>
+<li>MyBatis在多表查询时，极大可能会出现脏数据，有设计上的缺陷，安全使用二级缓存的条件比较苛刻。</li>
+<li>在分布式环境下，由于默认的MyBatis Cache实现都是基于本地的，分布式环境下必然会出现读取到脏数据，需要使用集中式缓存将MyBatis的Cache接口实现，有一定的开发成本，直接使用Redis、Memcached等分布式缓存可能成本更低，安全性也更高。</li>
+</ol>
+<p>P.S mybatis-config.xml中元素有 <strong>严格的排列顺序</strong>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE configuration</span></span><br><span class="line"><span class="meta">        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"</span></span><br><span class="line"><span class="meta">        "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"Integer"</span> <span class="attr">type</span>=<span class="string">"java.lang.Integer"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"Long"</span> <span class="attr">type</span>=<span class="string">"java.lang.Long"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"HashMap"</span> <span class="attr">type</span>=<span class="string">"java.util.HashMap"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"LinkedHashMap"</span> <span class="attr">type</span>=<span class="string">"java.util.LinkedHashMap"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"ArrayList"</span> <span class="attr">type</span>=<span class="string">"java.util.ArrayList"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"LinkedList"</span> <span class="attr">type</span>=<span class="string">"java.util.LinkedList"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"localCacheScope"</span> <span class="attr">value</span>=<span class="string">"SESSION"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">* 将会报红：the content of element type configuration must match（properties?, settings?, typeAliases?）</span><br><span class="line"></span><br><span class="line">按要求修改为：settings排在typeAliases前</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MyBatis-缓存机制/" rel="tag"># MyBatis 缓存机制</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/12/Docker容器间通信/" rel="next" title="Docker容器间通信">
+                <i class="fa fa-chevron-left"></i> Docker容器间通信
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg" alt="yhui">
+          <p class="site-author-name" itemprop="name">yhui</p>
+           
+              <p class="site-description motion-element" itemprop="description">哪有全力以赴，只是尽力而为</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/iyanghui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">一级缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.3.</span> <span class="nav-text">手动创建SqlSession</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.4.</span> <span class="nav-text">常规集成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.5.</span> <span class="nav-text">源码跟踪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.6.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">二级缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.3.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.4.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017-6 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yhui</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("q87Cu37Tjw4A7Aysl3yhTlkR-gzGzoHsz", "1fWuR3yFSfUFyjdtvorqSsMC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("q87Cu37Tjw4A7Aysl3yhTlkR-gzGzoHsz", "1fWuR3yFSfUFyjdtvorqSsMC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+  
+</body>
+</html>

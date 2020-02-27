@@ -115,7 +115,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://oyjj1q.sn.files.1drv.com/y4mZhfa-cPDz-8FuH47vFn_Y-xUXNS_1UpwmtdOQmYrO9vpF7fc88n8FTC-dmmysFwC8anRJJJhqGNevy0-LtXlAsMiVuVc0ZI7uran8B97X3F1P-7Cg9KqVuu8BkMOOtT1ORrZSlD903HyXnZoYZKdfItQOTtCvDQrtK1CAi2dZYZDfo6VkjuuebsosW2YsDW1DE_ymBRjkHZF1YxuARfK_w?width=2694&height=1142&cropmode=none">
 <meta property="og:image" content="https://myguyq.sn.files.1drv.com/y4mo5AExED7EOVKxlUUM6b3zHH6I63fjmrXXMbU28YP_8hi0hqT5ieU-vURTjSSLO1SSYsy2dje17xyzq0z4FkxkM9U5Ea0yY_DSFEH8pGtCMXrDWh01vUDlXKfMU898-2CtkvaMVfpnjN89hmCL7GWqRzR9iWpW4dMFf-YCI4tqQWa05x8KvmFtA1vrUYs_onvH2hQsrQzZ7P8I2p8n4VGnA?width=2752&height=1098&cropmode=none">
-<meta property="og:updated_time" content="2020-01-13T01:43:47.805Z">
+<meta property="og:updated_time" content="2020-01-13T02:32:32.357Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL事务隔离级别">
 <meta name="twitter:description" content="赃读：当前事务能看到别的事务未提交的数据，称为“赃读”。   不可重复读：表示“不一定可重读”。其实，&amp;quot;不可重读&amp;quot;与&amp;quot;幻读&amp;quot;的表象都非常相似，都是在同一个事务中，并没有操作某些数据，可是这些数据却莫名的被改变了，或者突然多出了某些数据，又或者突然少了某些数据，这些状况好像都能用&amp;quot;幻象&amp;quot;这个词去理解。而且，mysql官方文档中也把不可重读">
@@ -413,8 +413,9 @@
 <h4>3. Repeatable-read（可重读）</h4>
 <p>这是MySQL的默认隔离级别，它确认在同一事务的多个实例在并发读取数据时，多次读取也会看到同样的数据行，而不管其他事务是不是已经提交。但是这可能会发生一个更为棘手的问题“幻读”，InnoDB和Falcon存储引擎通过多版本并发控制（MVCC，Multiversion Concurrency Control）机制解决了该问题。</p>
 <ul>
-<li>[ ] 涉及知识点较多，先留空，之后再做总结。具体可参考这篇文章<a href="https://github.com/Yhzhtk/note/issues/42" target="_blank" rel="noopener">Innodb 中 RR 隔离级别能否防止幻读？</a></li>
+<li>[ ] 涉及知识点较多，先留空，之后再做总结。具体可参考文章<a href="https://github.com/Yhzhtk/note/issues/42" target="_blank" rel="noopener">Innodb 中 RR 隔离级别能否防止幻读？</a>、<a href="https://tech.meituan.com/2014/08/20/innodb-lock.html" target="_blank" rel="noopener">Innodb中的事务隔离级别和锁的关系</a></li>
 </ul>
+<p>行锁防止别的事务修改或删除，GAP锁防止别的事务新增，行锁和GAP锁结合形成的的Next-Key锁共同解决了RR级别在写数据时的幻读问题。</p>
 <h4>4. Serializable串行化</h4>
 <p>这是最高的隔离级别，它通过强制事务排序，使之不能相互发生冲突，从而解决了幻读的问题。简而言之，Serializable是在数据行上加上共享锁。在这个级别，可能导致大量的锁竞争和超时现象。</p>
 <p>在MySQL中，分别实现了以上四种隔离级别时，有可能产生的问题如下所示：</p>
@@ -578,7 +579,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -589,7 +590,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -600,7 +601,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
