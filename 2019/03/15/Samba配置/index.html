@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="之喜郎">
 <meta property="og:description" content="Samba 是SMB/CIFS 网络协议的重新实现, 可以在 Linux 和 Windows 系统间进行文件、打印机共享，和NFS的功能类似    安装samba 1$yum install -y samba   配置防火墙策略 1$firewall-cmd --add-service samba --permanent   selinux设置(Security-Enhanced Linux)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-15T03:55:16.000Z">
+<meta property="og:updated_time" content="2020-11-20T08:27:26.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Samba配置">
 <meta name="twitter:description" content="Samba 是SMB/CIFS 网络协议的重新实现, 可以在 Linux 和 Windows 系统间进行文件、打印机共享，和NFS的功能类似    安装samba 1$yum install -y samba   配置防火墙策略 1$firewall-cmd --add-service samba --permanent   selinux设置(Security-Enhanced Linux)">
@@ -433,7 +433,7 @@
 </ul>
 <ol start="4">
 <li>配置<a href="https://blog.51cto.com/yuanbin/115761" target="_blank" rel="noopener">smb.conf</a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">`#vim /etc/samba/smb.conf`</span><br><span class="line"></span><br><span class="line">[global]</span><br><span class="line">workgroup = SambaGroup</span><br><span class="line">netbios name = CRPOWER</span><br><span class="line">hosts allow = 10.61.46.*/255.255.255.0</span><br><span class="line">server string = CRPOWER</span><br><span class="line">security = user</span><br><span class="line">        </span><br><span class="line">[crpower]</span><br><span class="line">path = /kingdom/crpower/share</span><br><span class="line">writeable = yes</span><br><span class="line">browseable = yes</span><br><span class="line">public = yes</span><br><span class="line">guest ok = yes</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">`#vim /etc/samba/smb.conf`</span><br><span class="line"></span><br><span class="line">[global]</span><br><span class="line">workgroup = SambaGroup</span><br><span class="line">netbios name = GITHUB</span><br><span class="line">hosts allow = 10.61.46.*/255.255.255.0</span><br><span class="line">server string = GITHUB</span><br><span class="line">security = user</span><br><span class="line">        </span><br><span class="line">[github]</span><br><span class="line">path = /smb/share</span><br><span class="line">writeable = yes</span><br><span class="line">browseable = yes</span><br><span class="line">public = yes</span><br><span class="line">guest ok = yes</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>说明：</p>
 <p>[global]这段是全局配置，是必段写的。其中有如下的几行；</p>
@@ -450,14 +450,14 @@
 </ul>
 <p>share在新版本中已经被弃用了，解决方式如下:
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">把</span><br><span class="line">security = share</span><br><span class="line">改为</span><br><span class="line">security = user</span><br><span class="line">map to guest = Bad User</span><br></pre></td></tr></table></figure></p>
-<p>[crpower] 这是连接后显示的共享文件夹名称</p>
+<p>[github] 这是连接后显示的共享文件夹名称</p>
 <p>public = yes/no 用来指定该共享是否允许guest账户访问。</p>
 <p>guest ok = yes/no 意义同“public”。</p>
 <p>valid users = 当全局的<a href="https://www.linuxidc.com/Linux/2017-05/143472.htm" target="_blank" rel="noopener">security设置为user</a>时使用</p>
 <ol start="5">
 <li>
 <p>共享目录授权
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$chown -R nobody:nobody /kingdom/crpower/share</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$chown -R nobody:nobody /smb/share</span><br></pre></td></tr></table></figure></p>
 </li>
 <li>
 <p>使用testparm命令来测试smb.conf配置档的合法性
@@ -587,7 +587,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -609,7 +609,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

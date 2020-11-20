@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="yhui, iyanghui">
+  <meta name="keywords" content="Hibernate 缓存机制,">
 
 
 
@@ -105,13 +105,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="之喜郎">
-<meta property="og:url" content="http://yoursite.com/categories/前端/index.html">
+<meta name="description" content="缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。 缓存的介质一般是内存，所以读写速度很快。但如果缓存中存放的数据量非常大时，也会用硬盘作为缓存介质。缓存的实现不仅仅要考虑存储的介质，还要考虑到管理缓存的并发访问和缓存">
+<meta name="keywords" content="Hibernate 缓存机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate缓存机制">
+<meta property="og:url" content="http://yoursite.com/2020/02/27/Hibernate缓存机制/index.html">
 <meta property="og:site_name" content="之喜郎">
+<meta property="og:description" content="缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。 缓存的介质一般是内存，所以读写速度很快。但如果缓存中存放的数据量非常大时，也会用硬盘作为缓存介质。缓存的实现不仅仅要考虑存储的介质，还要考虑到管理缓存的并发访问和缓存">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T02:27:25.564Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="之喜郎">
+<meta name="twitter:title" content="Hibernate缓存机制">
+<meta name="twitter:description" content="缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。 缓存的介质一般是内存，所以读写速度很快。但如果缓存中存放的数据量非常大时，也会用硬盘作为缓存介质。缓存的实现不仅仅要考虑存储的介质，还要考虑到管理缓存的并发访问和缓存">
 
 
 
@@ -139,13 +144,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/前端/">
+  <link rel="canonical" href="http://yoursite.com/2020/02/27/Hibernate缓存机制/">
 
 
 
 
 
-  <title> 分类: 前端 | 之喜郎 </title>
+  <title> Hibernate缓存机制 | 之喜郎 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,7 +175,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -284,45 +289,198 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2>
-        前端
-        <small>分类</small>
-      </h2>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/08/dns劫持和http劫持/" itemprop="url">
-              
-                <span itemprop="name">dns劫持和http劫持</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-04-08T18:07:47+08:00" content="2018-04-08">
-          04-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/27/Hibernate缓存机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yhui">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="之喜郎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hibernate缓存机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-27T10:26:42+08:00">
+                2020-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/02/27/Hibernate缓存机制/" class="leancloud_visitors" data-flag-title="Hibernate缓存机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。</p>
+<p>缓存的介质一般是内存，所以读写速度很快。但如果缓存中存放的数据量非常大时，也会用硬盘作为缓存介质。缓存的实现不仅仅要考虑存储的介质，还要考虑到管理缓存的并发访问和缓存数据的生命周期。</p>
+<p>当应用频繁访问数据库时，必然会导致数据库性能的下降。假如我们在内存中开辟出一部分“特殊区域”，这个区域用来存放需要的数据。当数据查询时，先在“特殊区域”进行查询，查询到则直接返回；未查询到，再去访问数据库。这样就减少了与数据库的交互，在不降低数据库访问性能前提下，也增加了数据响应的速度，这就是“缓存机制”。</p>
+</blockquote>
+<blockquote>
+<p>JPA仅仅是一个规范，而不是产品；使用JPA本身是不能做到持久化的。JPA只是定义了一些接口而已，系统使用中，需要一些真正的实现者，Hibernate就是其中之一（JPA Provider：Hibernate、Eclipse link等）。
+JPA规范中定义了多类缓存类型：一级缓存、二级缓存、对象缓存和数据缓存。<a href="http://www.baidu.com" target="_blank" rel="noopener">wiki中jpa缓存介绍</a></p>
+</blockquote>
+<p>当Hibernate查询数据时，先根据ID从一级缓存中查找，查不到并且配置二级缓存的话，再到二级缓存中查找。如果都查不到，则查询数据，再把数据按照ID存放到缓存。</p>
+<h4>一级缓存</h4>
+<p>一级缓存又叫“Session的缓存”。Session内置不能被卸载，Session的缓存是事务范围的缓存（Session对象的生命周期通常对应一个数据库事务或者一个应用事务）。</p>
+<p>一级缓存中，持久化的每个实例都有唯一OID。</p>
+<h4>二级缓存</h4>
+<p>二级缓存也叫“SessionFactory的缓存”。由于SessionFactory对象的生命周期和整个应用的生命周期相对应，所以二级缓存是进程范围或者集群范围内的缓存，有可能存在并发访问问题。因此需要采取适当的并发访问策略，该策略为被缓存的数据提供了事务隔离级别。</p>
+<p>第二级缓存是可选的，是一个可配置的插件，默认SessionFactory不会启用这个插件。</p>
+<p>Hibernate提供了org.hibernate.cache.CacheProvider接口,它充当缓存插件与Hibernate之间的适配器。</p>
+<h4>总结</h4>
+<p>什么样的数据适合放到二级缓存？</p>
+<ul>
+<li>很少被修改的数据</li>
+<li>不是很重要的数据，允许出现并发问题</li>
+<li>不会被并发访问的数据</li>
+<li>常量数据</li>
+</ul>
+<p>什么样的数据不适合放到二级缓存？</p>
+<ul>
+<li>经常被修改的数据</li>
+<li>不允许出现并发访问的数据</li>
+<li>与其他应用共享的数据</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hibernate-缓存机制/" rel="tag"># Hibernate 缓存机制</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/27/MyBatis缓存机制/" rel="next" title="MyBatis缓存机制">
+                <i class="fa fa-chevron-left"></i> MyBatis缓存机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -330,6 +488,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -349,8 +511,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="http://ordzg7xsq.bkt.clouddn.com/hexo-blog-headimg.jpg" alt="yhui">
           <p class="site-author-name" itemprop="name">yhui</p>
@@ -421,6 +592,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">一级缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">二级缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -528,6 +715,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
